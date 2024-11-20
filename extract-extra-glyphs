@@ -1,0 +1,5 @@
+Open($2);
+SelectAll();
+SelectFewer(0u26A1);
+Clear();
+Save($1 + "/src/glyphs/SomeExtraSymbols.sfd");

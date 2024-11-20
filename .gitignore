@@ -1,0 +1,6 @@
+CascadiaCode*zip
+src/
+otf/
+ttf/
+woff2/
+__pycache__/*
