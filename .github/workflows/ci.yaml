@@ -25,14 +25,14 @@ jobs:
       with:
         repository: reddit/redditsans  # The repository to scan.
         releases-only: false  # We know that all relevant tags have a GitHub release for them.
-      id: find-latest-tag  # The step ID to refer to later.
+      id: find_latest_tag  # The step ID to refer to later.
   
-    - run: echo "Reddit Sans Mono is at version ${{ steps.find-latest-tag.outputs.tag }}"
+    - run: echo "Reddit Sans Mono is at version ${{ steps.find_latest_tag.outputs.tag }}"
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Save the latest Reddit Sans tag
       run: |
-        echo "REDDITSANSTAG=${{ steps.find-latest-tag.outputs.tag_name }}" >> $GITHUB_ENV
+        echo "REDDITSANSTAG=${{ steps.find_latest_tag.outputs.tag }}" >> $GITHUB_ENV
     - name: Check if tag exists
       uses: mukunku/tag-exists-action@v1.6.0
       id: check_tag
