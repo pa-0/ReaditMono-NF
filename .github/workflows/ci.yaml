@@ -21,18 +21,18 @@ jobs:
       tag_exists: ${{ steps.check_tag.outputs.exists }}
 
     steps:
-    - name: Fetch latest release of Reddit Sans Mono
-      uses: octokit/request-action@v2.x
-      id: get_latest_release
+    - uses: oprypin/find-latest-tag@v1
       with:
-        route: GET /repos/reddit/redditsans/releases/latest
-        owner: reddit
-        repo: redditsans
+        repository: reddit/redditsans  # The repository to scan.
+        releases-only: false  # We know that all relevant tags have a GitHub release for them.
+      id: find-latest-tag  # The step ID to refer to later.
+  
+    - run: echo "Reddit Sans Mono is at version ${{ steps.find-latest-tag.outputs.tag }}"
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    - name: Get the latest Reddit Sans tag
+    - name: Save the latest Reddit Sans tag
       run: |
-        echo "REDDITSANSTAG=${{ fromJson(steps.get_latest_release.outputs.data).tag_name }}" >> $GITHUB_ENV
+        echo "REDDITSANSTAG=${{ steps.find-latest-tag.outputs.tag_name }}" >> $GITHUB_ENV
     - name: Check if tag exists
       uses: mukunku/tag-exists-action@v1.6.0
       id: check_tag
