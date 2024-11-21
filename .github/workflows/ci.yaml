@@ -116,24 +116,24 @@ jobs:
 
     - name: Build Mono Powerline
       run: |
-        ./do_generate 01 --powerline --mono RedditSansMono-Regular.ttf    ReaditSansMonoNFPL.ttf            "Readit Sans Mono NF PL"
-        ./do_generate 02 --powerline --mono RedditSansMono-Bold.ttf       ReaditSansMonoNFPL-Bold.ttf       "Readit Sans Mono NF PL"
-        ./do_generate 03 --powerline --mono RedditSansMono-SemiBold.ttf   ReaditSansMonoNFPL-SemiBold.ttf   "Readit Sans Mono NF PL"
-        ./do_generate 04 --powerline --mono RedditSansMono-ExtraBold.ttf  ReaditSansMonoNFPL-ExtraBold.ttf  "Readit Sans Mono NF PL"
-        ./do_generate 05 --powerline --mono RedditSansMono-Light.ttf      ReaditSansMonoNFPL-Light.ttf      "Readit Sans Mono NF PL"
-        ./do_generate 06 --powerline --mono RedditSansMono-Medium.ttf     ReaditSansMonoNFPL-Medium.ttf     "Readit Sans Mono NF PL"
+        ./do_generate 01 --powerline --mono RedditMono-Regular.ttf    ReaditSansMonoNFPL.ttf            "Readit Sans Mono NF PL"
+        ./do_generate 02 --powerline --mono RedditMono-Bold.ttf       ReaditSansMonoNFPL-Bold.ttf       "Readit Sans Mono NF PL"
+        ./do_generate 03 --powerline --mono RedditMono-SemiBold.ttf   ReaditSansMonoNFPL-SemiBold.ttf   "Readit Sans Mono NF PL"
+        ./do_generate 04 --powerline --mono RedditMono-ExtraBold.ttf  ReaditSansMonoNFPL-ExtraBold.ttf  "Readit Sans Mono NF PL"
+        ./do_generate 05 --powerline --mono RedditMono-Light.ttf      ReaditSansMonoNFPL-Light.ttf      "Readit Sans Mono NF PL"
+        ./do_generate 06 --powerline --mono RedditMono-Medium.ttf     ReaditSansMonoNFPL-Medium.ttf     "Readit Sans Mono NF PL"
         mkdir readit-sans-mono-powerline-NF
         mv Readit*ttf readit-sans-mono-powerline-NF
         zip readit-sans-mono-powerline-NF.zip readit-sans-mono-powerline-NF/*
 
     - name: Build Mono
       run: |
-        ./do_generate 07 -c --mono RedditSansMono-Regular.ttf             ReaditSansMonoNF.ttf              "Readit Sans Mono NF"
-        ./do_generate 08 -c --mono RedditSansMono-Bold.ttf                ReaditSansMonoNF-Bold.ttf         "Readit Sans Mono NF"
-        ./do_generate 09 -c --mono RedditSansMono-SemiBold.ttf            ReaditSansMonoNF-SemiBold.ttf     "Readit Sans Mono NF"
-        ./do_generate 10 -c --mono RedditSansMono-ExtraBold.ttf           ReaditSansMonoNF-ExtraBold.ttf    "Readit Sans Mono NF"
-        ./do_generate 11 -c --mono RedditSansMono-Light.ttf               ReaditSansMonoNF-Light.ttf        "Readit Sans Mono NF"
-        ./do_generate 12 -c --mono RedditSansMono-Medium.ttf              ReaditSansMonoNF-Medium.ttf       "Readit Sans Mono NF"
+        ./do_generate 07 -c --mono RedditMono-Regular.ttf             ReaditSansMonoNF.ttf              "Readit Sans Mono NF"
+        ./do_generate 08 -c --mono RedditMono-Bold.ttf                ReaditSansMonoNF-Bold.ttf         "Readit Sans Mono NF"
+        ./do_generate 09 -c --mono RedditMono-SemiBold.ttf            ReaditSansMonoNF-SemiBold.ttf     "Readit Sans Mono NF"
+        ./do_generate 10 -c --mono RedditMono-ExtraBold.ttf           ReaditSansMonoNF-ExtraBold.ttf    "Readit Sans Mono NF"
+        ./do_generate 11 -c --mono RedditMono-Light.ttf               ReaditSansMonoNF-Light.ttf        "Readit Sans Mono NF"
+        ./do_generate 12 -c --mono RedditMono-Medium.ttf              ReaditSansMonoNF-Medium.ttf       "Readit Sans Mono NF"
         mkdir readit-sans-mono-NF
         mv Readit*ttf readit-sans-mono-NF
         zip readit-sans-mono-NF.zip readit-sans-mono-NF/*
