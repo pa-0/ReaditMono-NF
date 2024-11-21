@@ -73,12 +73,12 @@ jobs:
       # with:
         # tag: ${{ needs.check-for-new-reddit-sans.outputs.tag_name }}
       run: |
-        cURL -L https://github.com/reddit/redditsans/raw/refs/heads/main/fonts/mono/ttf/RedditMono-Regular.ttf
-        cURL -L https://github.com/reddit/redditsans/raw/refs/heads/main/fonts/mono/ttf/RedditMono-Light.ttf
-        cURL -L https://github.com/reddit/redditsans/raw/refs/heads/main/fonts/mono/ttf/RedditMono-Medium.ttf
-        cURL -L https://github.com/reddit/redditsans/raw/refs/heads/main/fonts/mono/ttf/RedditMono-SemiBold.ttf
-        cURL -L https://github.com/reddit/redditsans/raw/refs/heads/main/fonts/mono/ttf/RedditMono-Bold.ttf
-        cURL -L https://github.com/reddit/redditsans/raw/refs/heads/main/fonts/mono/ttf/RedditMono-ExtraBold.ttf
+        cURL -LO https://github.com/reddit/redditsans/raw/refs/heads/main/fonts/mono/ttf/RedditMono-Regular.ttf
+        cURL -LO https://github.com/reddit/redditsans/raw/refs/heads/main/fonts/mono/ttf/RedditMono-Light.ttf
+        cURL -LO https://github.com/reddit/redditsans/raw/refs/heads/main/fonts/mono/ttf/RedditMono-Medium.ttf
+        cURL -LO https://github.com/reddit/redditsans/raw/refs/heads/main/fonts/mono/ttf/RedditMono-SemiBold.ttf
+        cURL -LO https://github.com/reddit/redditsans/raw/refs/heads/main/fonts/mono/ttf/RedditMono-Bold.ttf
+        cURL -LO https://github.com/reddit/redditsans/raw/refs/heads/main/fonts/mono/ttf/RedditMono-ExtraBold.ttf
 
     # Ubuntu 20.04 has only fontforge release 2020, but there are some vital bugfixes in the 2022 release
     # This can be replaced with the ordinary apt package when Ubuntu updates, probably with 22.10?
@@ -116,27 +116,27 @@ jobs:
 
     - name: Build Mono Powerline
       run: |
-        ./do_generate 01 --powerline --mono RedditSansMono-Regular.ttf    ReaditSansMonoPL.ttf            "Readit Sans Mono PL"
-        ./do_generate 02 --powerline --mono RedditSansMono-Bold.ttf       ReaditSansMonoPL-Bold.ttf       "Readit Sans Mono PL"
-        ./do_generate 03 --powerline --mono RedditSansMono-SemiBold.ttf   ReaditSansMonoPL-SemiBold.ttf   "Readit Sans Mono PL"
-        ./do_generate 04 --powerline --mono RedditSansMono-ExtraBold.ttf  ReaditSansMonoPL-ExtraBold.ttf  "Readit Sans Mono PL"
-        ./do_generate 05 --powerline --mono RedditSansMono-Light.ttf      ReaditSansMonoPL-Light.ttf      "Readit Sans Mono PL"
-        ./do_generate 06 --powerline --mono RedditSansMono-Medium.ttf     ReaditSansMonoPL-Medium.ttf     "Readit Sans Mono PL"
-        mkdir readit-sans-mono-powerline
-        mv Readit*ttf readit-sans-mono-powerline
-        zip readit-sans-mono-powerline.zip readit-sans-mono-powerline/*
+        ./do_generate 01 --powerline --mono RedditSansMono-Regular.ttf    ReaditSansMonoNFPL.ttf            "Readit Sans Mono NF PL"
+        ./do_generate 02 --powerline --mono RedditSansMono-Bold.ttf       ReaditSansMonoNFPL-Bold.ttf       "Readit Sans Mono NF PL"
+        ./do_generate 03 --powerline --mono RedditSansMono-SemiBold.ttf   ReaditSansMonoNFPL-SemiBold.ttf   "Readit Sans Mono NF PL"
+        ./do_generate 04 --powerline --mono RedditSansMono-ExtraBold.ttf  ReaditSansMonoNFPL-ExtraBold.ttf  "Readit Sans Mono NF PL"
+        ./do_generate 05 --powerline --mono RedditSansMono-Light.ttf      ReaditSansMonoNFPL-Light.ttf      "Readit Sans Mono NF PL"
+        ./do_generate 06 --powerline --mono RedditSansMono-Medium.ttf     ReaditSansMonoNFPL-Medium.ttf     "Readit Sans Mono NF PL"
+        mkdir readit-sans-mono-powerline-NF
+        mv Readit*ttf readit-sans-mono-powerline-NF
+        zip readit-sans-mono-powerline-NF.zip readit-sans-mono-powerline-NF/*
 
     - name: Build Mono
       run: |
-        ./do_generate 07 -c --mono RedditSansMono-Regular.ttf             ReaditSansMono.ttf              "Readit Sans Mono"
-        ./do_generate 08 -c --mono RedditSansMono-Bold.ttf                ReaditSansMono-Bold.ttf         "Readit Sans Mono"
-        ./do_generate 09 -c --mono RedditSansMono-SemiBold.ttf            ReaditSansMono-SemiBold.ttf     "Readit Sans Mono"
-        ./do_generate 10 -c --mono RedditSansMono-ExtraBold.ttf           ReaditSansMono-ExtraBold.ttf    "Readit Sans Mono"
-        ./do_generate 11 -c --mono RedditSansMono-Light.ttf               ReaditSansMono-Light.ttf        "Readit Sans Mono"
-        ./do_generate 12 -c --mono RedditSansMono-Medium.ttf              ReaditSansMono-Medium.ttf       "Readit Sans Mono"
-        mkdir readit-sans-mono
-        mv Readit*ttf readit-sans-mono
-        zip readit-sans-mono.zip readit-sans-mono/*
+        ./do_generate 07 -c --mono RedditSansMono-Regular.ttf             ReaditSansMonoNF.ttf              "Readit Sans Mono NF"
+        ./do_generate 08 -c --mono RedditSansMono-Bold.ttf                ReaditSansMonoNF-Bold.ttf         "Readit Sans Mono NF"
+        ./do_generate 09 -c --mono RedditSansMono-SemiBold.ttf            ReaditSansMonoNF-SemiBold.ttf     "Readit Sans Mono NF"
+        ./do_generate 10 -c --mono RedditSansMono-ExtraBold.ttf           ReaditSansMonoNF-ExtraBold.ttf    "Readit Sans Mono NF"
+        ./do_generate 11 -c --mono RedditSansMono-Light.ttf               ReaditSansMonoNF-Light.ttf        "Readit Sans Mono NF"
+        ./do_generate 12 -c --mono RedditSansMono-Medium.ttf              ReaditSansMonoNF-Medium.ttf       "Readit Sans Mono NF"
+        mkdir readit-sans-mono-NF
+        mv Readit*ttf readit-sans-mono-NF
+        zip readit-sans-mono-NF.zip readit-sans-mono-NF/*
 
 
     - name: Check for preexisting glyphs
@@ -146,12 +146,12 @@ jobs:
     - uses: actions/upload-artifact@v4
       with:
         name: Readit Sans Mono Powerline
-        path: "readit-sans-mono-powerline"
+        path: "readit-sans-mono-powerline-NF"
 
     - uses: actions/upload-artifact@v4
       with:
         name: Readit Sans Mono
-        path: "readit-sans-mono"
+        path: "readit-sans-mono-NF"
 
     # Release part
     - name: Create tag
@@ -172,7 +172,7 @@ jobs:
       with:
         tag_name: ${{ startsWith(github.ref, 'refs/tags/') && steps.get_tag_name.outputs.version || needs.check-for-new-reddit-sans.outputs.tag_name }}
         files: |
-          readit-sans-mono-powerline.zip
-          readit-sans-mono.zip
+          readit-sans-mono-powerline-NF.zip
+          readit-sans-mono-NF.zip
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
