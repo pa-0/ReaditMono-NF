@@ -1,78 +1,82 @@
-name: ci
+name: Nerd Font Patcher
 
 on:
+  workflow_dispatch:
   push:
-    branches:
-      - master
+#    branches:
+#      - master
     tags:
       - 'v*'
-  pull_request:
-    branches:
-      - master
+  #pull_request:
+  #  branches:
+  #   - master
   # schedule:
   #   - cron: "0 13 * * *"
 
 jobs:
-  check-for-new-cascadia:
+  check-for-new-reddit-sans:
     runs-on: ubuntu-22.04
     outputs:
-      tag_name: ${{ env.CASCADIATAG }}
+      tag_name: ${{ env.REDDITSANSTAG }}
       tag_exists: ${{ steps.check_tag.outputs.exists }}
 
     steps:
-    - name: Fetch latest release of Cascadia Code
+    - name: Fetch latest release of Reddit Sans Mono
       uses: octokit/request-action@v2.x
       id: get_latest_release
       with:
-        route: GET /repos/microsoft/cascadia-code/releases/latest
+        route: GET /repos/reddit/redditsans/releases/latest
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    - name: Get the latest Cascadia tag
+    - name: Get the latest Reddit Sans tag
       run: |
-        echo "CASCADIATAG=${{ fromJson(steps.get_latest_release.outputs.data).tag_name }}" >> $GITHUB_ENV
+        echo "REDDITSANSTAG=${{ fromJson(steps.get_latest_release.outputs.data).tag_name }}" >> $GITHUB_ENV
     - name: Check if tag exists
       uses: mukunku/tag-exists-action@v1.6.0
       id: check_tag
       with:
-        tag: ${{ env.CASCADIATAG }}
+        tag: ${{ env.REDDITSANSTAG }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Summary
       run: |
-        echo "Latest Cascadia tag is $CASCADIATAG"
+        echo "Latest Reddit Sans tag is $REDDITSANSTAG"
 
   build-and-release:
-    needs: check-for-new-cascadia
-    if: ${{ github.event_name != 'schedule' || needs.check-for-new-cascadia.outputs.tag_exists != 'true' }}
+    needs: check-for-new-reddit-sans
+    if: ${{ github.event_name != 'schedule' || needs.check-for-new-reddit-sans.outputs.tag_exists != 'true' }}
     runs-on: ubuntu-22.04
     env:
-      CASCADIATAG: ${{ needs.check-for-new-cascadia.outputs.tag_name }}
-      CASCADIATAG_ISNOTNEW: ${{ needs.check-for-new-cascadia.outputs.tag_exists }}
+      REDDITSANSTAG: ${{ needs.check-for-new-reddit-sans.outputs.tag_name }}
+      REDDITSANSTAG_ISNOTNEW: ${{ needs.check-for-new-reddit-sans.outputs.tag_exists }}
 
     steps:
     - uses: actions/checkout@v4
       with:
         fetch-depth: 0
+
     - name: Decide on version
       run: |
-        if [ "${CASCADIATAG_ISNOTNEW}" = "false" ]; then
+        if [ "${REDDITSANSTAG_ISNOTNEW}" = "false" ]; then
           echo New release is not tagged yet in our repo
           echo It will only be tagged after successfull release in job 'Create tag'
-          OURVERSION=${CASCADIATAG}
+          OURVERSION=${REDDITSANSTAG}
         else
           echo Re-release uses our manual tags and/or patchlevel
           OURVERSION=`git describe --always --tags`
         fi
         echo "OURVERSION=${OURVERSION}" >> $GITHUB_ENV
-    - name: Download latest version of Cascadia
-      uses: robinraju/release-downloader@v1.10
-      with:
-        repository: "microsoft/cascadia-code"
-        tag: ${{ needs.check-for-new-cascadia.outputs.tag_name }}
-        fileName: "*.zip"
-    - name: Open Cascadia release
+
+    - name: Download latest version of Reddit Sans Mono
+      # with:
+        # tag: ${{ needs.check-for-new-reddit-sans.outputs.tag_name }}
       run: |
-        unzip CascadiaCode*.zip 'ttf/*'
+        cURL -L https://github.com/reddit/redditsans/raw/refs/heads/main/fonts/mono/ttf/RedditMono-Regular.ttf
+        cURL -L https://github.com/reddit/redditsans/raw/refs/heads/main/fonts/mono/ttf/RedditMono-Light.ttf
+        cURL -L https://github.com/reddit/redditsans/raw/refs/heads/main/fonts/mono/ttf/RedditMono-Medium.ttf
+        cURL -L https://github.com/reddit/redditsans/raw/refs/heads/main/fonts/mono/ttf/RedditMono-SemiBold.ttf
+        cURL -L https://github.com/reddit/redditsans/raw/refs/heads/main/fonts/mono/ttf/RedditMono-Bold.ttf
+        cURL -L https://github.com/reddit/redditsans/raw/refs/heads/main/fonts/mono/ttf/RedditMono-ExtraBold.ttf
 
     # Ubuntu 20.04 has only fontforge release 2020, but there are some vital bugfixes in the 2022 release
     # This can be replaced with the ordinary apt package when Ubuntu updates, probably with 22.10?
@@ -96,6 +100,7 @@ jobs:
         repository: "ryanoasis/nerd-fonts"
         latest: true
         fileName: "FontPatcher.zip"
+
     - name: Open Font Patcher release
       run: |
         unzip FontPatcher.zip
@@ -106,106 +111,66 @@ jobs:
       run: pip3 install configparser
     - name: Extract additional powerline glyphs
       run: fontforge -lang=ff -script "`pwd`/extract-extra-glyphs" "`pwd`" `pwd`/src/glyphs/octicons/octicons.ttf
-    - name: Build Powerline
+
+    - name: Build Mono Powerline
       run: |
-        ./do_generate 01 --powerline --mono CascadiaCodePL-Regular.ttf            DelugiaPL.ttf              "Delugia PL"
-        ./do_generate 02 --powerline --mono CascadiaCodePL-Bold.ttf               DelugiaPL-Bold.ttf         "Delugia PL"
-        ./do_generate 03 --powerline --mono CascadiaCodePL-Italic.ttf             DelugiaPL-Italic.ttf       "Delugia PL"
-        ./do_generate 04 --powerline --mono CascadiaCodePL-BoldItalic.ttf         DelugiaPL-BoldItalic.ttf   "Delugia PL"
-        ./do_generate 05 --powerline --mono CascadiaCodePL-Light.ttf              DelugiaPLLight.ttf         "Delugia PL"
-        ./do_generate 06 --powerline --mono CascadiaCodePL-LightItalic.ttf        DelugiaPLLight-Italic.ttf  "Delugia PL"
-        mkdir delugia-powerline
-        mv Delugia*ttf delugia-powerline
-        zip delugia-powerline.zip delugia-powerline/*
-    - name: Build MonoPowerline
+        ./do_generate 01 --powerline --mono RedditSansMono-Regular.ttf    ReaditSansMonoPL.ttf            "Readit Sans Mono PL"
+        ./do_generate 02 --powerline --mono RedditSansMono-Bold.ttf       ReaditSansMonoPL-Bold.ttf       "Readit Sans Mono PL"
+        ./do_generate 03 --powerline --mono RedditSansMono-SemiBold.ttf   ReaditSansMonoPL-SemiBold.ttf   "Readit Sans Mono PL"
+        ./do_generate 04 --powerline --mono RedditSansMono-ExtraBold.ttf  ReaditSansMonoPL-ExtraBold.ttf  "Readit Sans Mono PL"
+        ./do_generate 05 --powerline --mono RedditSansMono-Light.ttf      ReaditSansMonoPL-Light.ttf      "Readit Sans Mono PL"
+        ./do_generate 06 --powerline --mono RedditSansMono-Medium.ttf     ReaditSansMonoPL-Medium.ttf     "Readit Sans Mono PL"
+        mkdir readit-sans-mono-powerline
+        mv Readit*ttf readit-sans-mono-powerline
+        zip readit-sans-mono-powerline.zip readit-sans-mono-powerline/*
+
+    - name: Build Mono
       run: |
-        ./do_generate 11 --powerline --mono CascadiaMonoPL-Regular.ttf            DelugiaMonoPL.ttf              "Delugia PL Mono"
-        ./do_generate 12 --powerline --mono CascadiaMonoPL-Bold.ttf               DelugiaMonoPL-Bold.ttf         "Delugia PL Mono"
-        ./do_generate 13 --powerline --mono CascadiaMonoPL-Italic.ttf             DelugiaMonoPL-Italic.ttf       "Delugia PL Mono"
-        ./do_generate 14 --powerline --mono CascadiaMonoPL-BoldItalic.ttf         DelugiaMonoPL-BoldItalic.ttf   "Delugia PL Mono"
-        ./do_generate 15 --powerline --mono CascadiaMonoPL-Light.ttf              DelugiaMonoPLLight.ttf         "Delugia PL Mono"
-        ./do_generate 16 --powerline --mono CascadiaMonoPL-LightItalic.ttf        DelugiaMonoPLLight-Italic.ttf  "Delugia PL Mono"
-        mkdir delugia-mono-powerline
-        mv Delugia*ttf delugia-mono-powerline
-        zip delugia-mono-powerline.zip delugia-mono-powerline/*
-    - name: Build Complete
-      run: |
-        ./do_generate 21 -c --mono CascadiaCodePL-Regular.ttf            DelugiaComplete.ttf              "Delugia"
-        ./do_generate 22 -c --mono CascadiaCodePL-Bold.ttf               DelugiaComplete-Bold.ttf         "Delugia"
-        ./do_generate 23 -c --mono CascadiaCodePL-Italic.ttf             DelugiaComplete-Italic.ttf       "Delugia"
-        ./do_generate 24 -c --mono CascadiaCodePL-BoldItalic.ttf         DelugiaComplete-BoldItalic.ttf   "Delugia"
-        ./do_generate 25 -c --mono CascadiaCodePL-Light.ttf              DelugiaCompleteLight.ttf         "Delugia"
-        ./do_generate 26 -c --mono CascadiaCodePL-LightItalic.ttf        DelugiaCompleteLight-Italic.ttf  "Delugia"
-        mkdir delugia-complete
-        mv Delugia*ttf delugia-complete
-        zip delugia-complete.zip delugia-complete/*
-    - name: Build Mono Complete
-      run: |
-        ./do_generate 31 -c --mono CascadiaMonoPL-Regular.ttf            DelugiaMonoComplete.ttf              "Delugia Mono"
-        ./do_generate 32 -c --mono CascadiaMonoPL-Bold.ttf               DelugiaMonoComplete-Bold.ttf         "Delugia Mono"
-        ./do_generate 33 -c --mono CascadiaMonoPL-Italic.ttf             DelugiaMonoComplete-Italic.ttf       "Delugia Mono"
-        ./do_generate 34 -c --mono CascadiaMonoPL-BoldItalic.ttf         DelugiaMonoComplete-BoldItalic.ttf   "Delugia Mono"
-        ./do_generate 35 -c --mono CascadiaMonoPL-Light.ttf              DelugiaMonoCompleteLight.ttf         "Delugia Mono"
-        ./do_generate 36 -c --mono CascadiaMonoPL-LightItalic.ttf        DelugiaMonoCompleteLight-Italic.ttf  "Delugia Mono"
-        mkdir delugia-mono-complete
-        mv Delugia*ttf delugia-mono-complete
-        zip delugia-mono-complete.zip delugia-mono-complete/*
-    - name: Build Book Complete
-      run: |
-        ./do_generate 41 -c -c CascadiaCodePL-Regular.ttf            DelugiaBook.ttf              "Delugia Book"
-        ./do_generate 42 -c -c CascadiaCodePL-Bold.ttf               DelugiaBook-Bold.ttf         "Delugia Book"
-        ./do_generate 43 -c -c CascadiaCodePL-Italic.ttf             DelugiaBook-Italic.ttf       "Delugia Book"
-        ./do_generate 44 -c -c CascadiaCodePL-BoldItalic.ttf         DelugiaBook-BoldItalic.ttf   "Delugia Book"
-        ./do_generate 45 -c -c CascadiaCodePL-Light.ttf              DelugiaBookLight.ttf         "Delugia Book"
-        ./do_generate 46 -c -c CascadiaCodePL-LightItalic.ttf        DelugiaBookLight-Italic.ttf  "Delugia Book"
-        mkdir delugia-book
-        mv Delugia*ttf delugia-book
-        zip delugia-book.zip delugia-book/*
+        ./do_generate 07 -c --mono RedditSansMono-Regular.ttf             ReaditSansMono.ttf              "Readit Sans Mono"
+        ./do_generate 08 -c --mono RedditSansMono-Bold.ttf                ReaditSansMono-Bold.ttf         "Readit Sans Mono"
+        ./do_generate 09 -c --mono RedditSansMono-SemiBold.ttf            ReaditSansMono-SemiBold.ttf     "Readit Sans Mono"
+        ./do_generate 10 -c --mono RedditSansMono-ExtraBold.ttf           ReaditSansMono-ExtraBold.ttf    "Readit Sans Mono"
+        ./do_generate 11 -c --mono RedditSansMono-Light.ttf               ReaditSansMono-Light.ttf        "Readit Sans Mono"
+        ./do_generate 12 -c --mono RedditSansMono-Medium.ttf              ReaditSansMono-Medium.ttf       "Readit Sans Mono"
+        mkdir readit-sans-mono
+        mv Readit*ttf readit-sans-mono
+        zip readit-sans-mono.zip readit-sans-mono/*
+
+
     - name: Check for preexisting glyphs
       run: |
         grep 'Skipping...' process*.log | grep  -vE ' Powerline(Extra)?Symbols>'
+
     - uses: actions/upload-artifact@v4
       with:
-        name: Delugia Powerline
-        path: "delugia-powerline"
+        name: Readit Sans Mono Powerline
+        path: "readit-sans-mono-powerline"
+
     - uses: actions/upload-artifact@v4
       with:
-        name: Delugia Mono Powerline
-        path: "delugia-mono-powerline"
-    - uses: actions/upload-artifact@v4
-      with:
-        name: Delugia Complete
-        path: "delugia-complete"
-    - uses: actions/upload-artifact@v4
-      with:
-        name: Delugia Mono Complete
-        path: "delugia-mono-complete"
-    - uses: actions/upload-artifact@v4
-      with:
-        name: Delugia Book
-        path: "delugia-book"
+        name: Readit Sans Mono
+        path: "readit-sans-mono"
 
     # Release part
     - name: Create tag
-      if: ${{ github.event_name != 'pull_request' && !startsWith(github.ref, 'refs/tags/') && needs.check-for-new-cascadia.outputs.tag_exists != 'true' }}
+      if: ${{ github.event_name != 'pull_request' && !startsWith(github.ref, 'refs/tags/') && needs.check-for-new-reddit-sans.outputs.tag_exists != 'true' }}
       uses: EndBug/latest-tag@latest
       with:
-        ref: ${{ needs.check-for-new-cascadia.outputs.tag_name }}
-        description: "Bump Delugia version to ${{ needs.check-for-new-cascadia.outputs.tag_name }}"
+        ref: ${{ needs.check-for-new-reddit-sans.outputs.tag_name }}
+        description: "Bump Readit Sans version to ${{ needs.check-for-new-reddit-sans.outputs.tag_name }}"
+
     - name: Get tag name
       id: get_tag_name
       if: ${{ startsWith(github.ref, 'refs/tags/') }}
       uses: battila7/get-version-action@v2
+
     - name: Release
       uses: softprops/action-gh-release@v2
-      if: ${{ github.event_name != 'pull_request' && (startsWith(github.ref, 'refs/tags/') || needs.check-for-new-cascadia.outputs.tag_exists != 'true') }}
+      if: ${{ github.event_name != 'pull_request' && (startsWith(github.ref, 'refs/tags/') || needs.check-for-new-reddit-sans.outputs.tag_exists != 'true') }}
       with:
-        tag_name: ${{ startsWith(github.ref, 'refs/tags/') && steps.get_tag_name.outputs.version || needs.check-for-new-cascadia.outputs.tag_name }}
+        tag_name: ${{ startsWith(github.ref, 'refs/tags/') && steps.get_tag_name.outputs.version || needs.check-for-new-reddit-sans.outputs.tag_name }}
         files: |
-          delugia-powerline.zip
-          delugia-mono-powerline.zip
-          delugia-complete.zip
-          delugia-mono-complete.zip
-          delugia-book.zip
+          readit-sans-mono-powerline.zip
+          readit-sans-mono.zip
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
