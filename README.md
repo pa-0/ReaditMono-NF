@@ -1,8 +1,8 @@
-# Reddit Sans Mono + Nerd Fonts
+# Readit (Reddit) Mono Nerd Font
 
 ![PLACEHOLDER](/REDDITSANSMONO.png)
 
-Can we add Nerd Fonts to the [Reddit Sans Mono](https://github.com/reddit/redditsans) font using a GitHub Action?
+Can we add Nerd Fonts to the [Reddit Sans Mono](https://github.com/reddit/redditsans) font family using a GitHub Action?
 
 Inspired by [Scott Hanselman](https://www.hanselman.com/blog/PatchingTheNewCascadiaCodeToIncludePowerlineGlyphsAndOtherNerdFontsForTheWindowsTerminal.aspx) and [Alistair Young](https://github.com/microsoft/cascadia-code/issues/10?WT.mc_id=-blog-scottha#issuecomment-532969414) and, most of all, Adam Cooper, whose effort with the [patched Cascadia family (à la Delugia Code)](https://github.com/adam7/delugia-code "Delugia Code") laid the (automation) groundwork for patching Readit Sans Mono.
 
