@@ -10,7 +10,7 @@ sys.path.insert(0, os.path.abspath(os.path.dirname(sys.argv[0])) + '/bin/scripts
 from FontnameParser import FontnameParser
 from TableHEADWriter import TableHEADWriter
 
-# Setup and parse the command-line arguments
+# Setup and parse the comand-line arguments
 parser = ArgumentParser()
 parser.add_argument("--input", help="input file name")
 parser.add_argument("--orig", help="original font filename")
@@ -19,7 +19,7 @@ parser.add_argument("--name", help="preferred family name")
 parser.add_argument("--version", help="text to add to the existing version")
 args = parser.parse_args()
 
-SIL_TABLE = [('readit sans ?(mono)( ?pl)?', args.name), ]
+SIL_TABLE = [('reddit ?(mono)( ?pl)?', args.name), ]
 
 print("\nRenaming process\n    {}\n as {}\n -> {}".format(args.input, args.orig, args.output))
 
@@ -32,8 +32,7 @@ if not n.parse_ok:
     sys.exit("Something with name parsing went wrong")
 
 # Open the file
-#readit=fontforge.open(args.input)
-readit=fontforge.open(args.output)
+readit=fontforge.open(args.input)
 
 # Rename the file
 n.rename_font(readit)
