@@ -20,10 +20,10 @@ if [ "$#" -ne 6 ]; then
 fi
 
 PWD=$( pwd )
-mkdir "${2}"
+mkdir "${6}${2}"
 # rm -f C*.ttf
-fontforge -script "${PWD}/font-patcher" --debug 2 --careful "${3}" --custom SomeExtraSymbols.sfd --has-no-italic "${PWD}/${4}" "${2}" --outputdir "${PWD}/${2}" --makegroups 4 --name "${6}" | tee "process${1}.log"
-zip -r "ReaditMono${2}.zip" "${PWD}/${2}/*"
+fontforge -script "${PWD}/font-patcher" --debug 2 --careful "${3}" --custom SomeExtraSymbols.sfd --has-no-italic "${PWD}/${4}" "${2}" --outputdir "${PWD}/${6}${2}" --makegroups 4 --name "${6}" | tee "process${1}.log"
+zip -r "${6}${2}.zip" "${PWD}/${6}${2}/*"
 if [ -z "${OURVERSION}" ]; then
     # Github CI sets this variable, but this can be useful for manual calls:
     OURVERSION=`git describe --always --tags`
