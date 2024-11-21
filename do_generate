@@ -28,4 +28,4 @@ if [ -z "${OURVERSION}" ]; then
     # Github CI sets this variable, but this can be useful for manual calls:
     OURVERSION=`git describe --always --tags`
 fi
-fontforge -script "${PWD}/rename-font" --orig "${PWD}/${4}" --input ${PWD}/R*.ttf --output "${PWD}/${5}" --version "${OURVERSION}" --name "${6}"
+#fontforge -script "${PWD}/rename-font" --orig "${PWD}/${4}" --input ${PWD}/R*.ttf --output "${PWD}/${5}" --version "${OURVERSION}" --name "${6}"
