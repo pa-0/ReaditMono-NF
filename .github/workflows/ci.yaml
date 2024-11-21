@@ -116,27 +116,27 @@ jobs:
 
     - name: Build Mono Powerline
       run: |
-        ./do_generate 01 --powerline --mono RedditMono-Regular.ttf    ReaditSansMonoNFPL.ttf            "Readit Sans Mono NF PL"
-        ./do_generate 02 --powerline --mono RedditMono-Bold.ttf       ReaditSansMonoNFPL-Bold.ttf       "Readit Sans Mono NF PL"
-        ./do_generate 03 --powerline --mono RedditMono-SemiBold.ttf   ReaditSansMonoNFPL-SemiBold.ttf   "Readit Sans Mono NF PL"
-        ./do_generate 04 --powerline --mono RedditMono-ExtraBold.ttf  ReaditSansMonoNFPL-ExtraBold.ttf  "Readit Sans Mono NF PL"
-        ./do_generate 05 --powerline --mono RedditMono-Light.ttf      ReaditSansMonoNFPL-Light.ttf      "Readit Sans Mono NF PL"
-        ./do_generate 06 --powerline --mono RedditMono-Medium.ttf     ReaditSansMonoNFPL-Medium.ttf     "Readit Sans Mono NF PL"
-        mkdir readit-sans-mono-powerline-NF
-        mv Readit*ttf readit-sans-mono-powerline-NF
-        zip readit-sans-mono-powerline-NF.zip readit-sans-mono-powerline-NF/*
+        ./do_generate 01 --powerline --mono RedditMono-Regular.ttf    ReaditMonoPL.ttf            "Readit Mono PL"
+        ./do_generate 02 --powerline --mono RedditMono-Bold.ttf       ReaditMonoPL-Bold.ttf       "Readit Mono PL"
+        ./do_generate 03 --powerline --mono RedditMono-SemiBold.ttf   ReaditMonoPL-SemiBold.ttf   "Readit Mono PL"
+        ./do_generate 04 --powerline --mono RedditMono-ExtraBold.ttf  ReaditMonoPL-ExtraBold.ttf  "Readit Mono PL"
+        ./do_generate 05 --powerline --mono RedditMono-Light.ttf      ReaditMonoPL-Light.ttf      "Readit Mono PL"
+        ./do_generate 06 --powerline --mono RedditMono-Medium.ttf     ReaditMonoPL-Medium.ttf     "Readit Mono PL"
+        mkdir readit-sans-mono-powerline
+        mv Readit*ttf readit-sans-mono-powerline
+        zip readit-sans-mono-powerline.zip readit-sans-mono-powerline/*
 
-    - name: Build Mono
+    - name: Build Mono (Complete)
       run: |
-        ./do_generate 07 -c --mono RedditMono-Regular.ttf             ReaditSansMonoNF.ttf              "Readit Sans Mono NF"
-        ./do_generate 08 -c --mono RedditMono-Bold.ttf                ReaditSansMonoNF-Bold.ttf         "Readit Sans Mono NF"
-        ./do_generate 09 -c --mono RedditMono-SemiBold.ttf            ReaditSansMonoNF-SemiBold.ttf     "Readit Sans Mono NF"
-        ./do_generate 10 -c --mono RedditMono-ExtraBold.ttf           ReaditSansMonoNF-ExtraBold.ttf    "Readit Sans Mono NF"
-        ./do_generate 11 -c --mono RedditMono-Light.ttf               ReaditSansMonoNF-Light.ttf        "Readit Sans Mono NF"
-        ./do_generate 12 -c --mono RedditMono-Medium.ttf              ReaditSansMonoNF-Medium.ttf       "Readit Sans Mono NF"
-        mkdir readit-sans-mono-NF
-        mv Readit*ttf readit-sans-mono-NF
-        zip readit-sans-mono-NF.zip readit-sans-mono-NF/*
+        ./do_generate 07 --complete --mono  RedditMono-Regular.ttf    ReaditMono.ttf              "Readit Mono"
+        ./do_generate 08 --complete --mono  RedditMono-Bold.ttf       ReaditMono-Bold.ttf         "Readit Mono"
+        ./do_generate 09 --complete --mono  RedditMono-SemiBold.ttf   ReaditMono-SemiBold.ttf     "Readit Mono"
+        ./do_generate 10 --complete --mono  RedditMono-ExtraBold.ttf  ReaditMono-ExtraBold.ttf    "Readit Mono"
+        ./do_generate 11 --complete --mono  RedditMono-Light.ttf      ReaditMono-Light.ttf        "Readit Mono"
+        ./do_generate 12 --complete --mono  RedditMono-Medium.ttf     ReaditMono-Medium.ttf       "Readit Mono"
+        mkdir readit-sans-mono
+        mv Readit*ttf readit-sans-mono
+        zip readit-sans-mono.zip readit-sans-mono/*
 
 
     - name: Check for preexisting glyphs
@@ -146,12 +146,12 @@ jobs:
     - uses: actions/upload-artifact@v4
       with:
         name: Readit Sans Mono Powerline
-        path: "readit-sans-mono-powerline-NF"
+        path: "readit-sans-mono-powerline"
 
     - uses: actions/upload-artifact@v4
       with:
         name: Readit Sans Mono
-        path: "readit-sans-mono-NF"
+        path: "readit-sans-mono"
 
     # Release part
     - name: Create tag
@@ -172,7 +172,7 @@ jobs:
       with:
         tag_name: ${{ startsWith(github.ref, 'refs/tags/') && steps.get_tag_name.outputs.version || needs.check-for-new-reddit-sans.outputs.tag_name }}
         files: |
-          readit-sans-mono-powerline-NF.zip
-          readit-sans-mono-NF.zip
+          readit-sans-mono-powerline.zip
+          readit-sans-mono.zip
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
