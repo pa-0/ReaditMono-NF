@@ -127,51 +127,68 @@ jobs:
     - name: Extract additional powerline glyphs
       run: fontforge -lang=ff -script "`pwd`/extract-extra-glyphs" "`pwd`" `pwd`/src/glyphs/octicons/octicons.ttf
 
-    - name: Build Mono Powerline
+    - name: Build Powerline Mono # 5th flag, output font name, is irrelevant (no longer used in 'rename-font' script)
       run: |
-        ./do_generate 01 --powerline --mono Reddit-Regular.ttf    ReaditSansPL.ttf            "Readit Mono PL"
-        ./do_generate 02 --powerline --mono Reddit-Bold.ttf       ReaditSansPL-Bold.ttf       "Readit Mono PL"
-        ./do_generate 03 --powerline --mono Reddit-SemiBold.ttf   ReaditSansPL-SemiBold.ttf   "Readit Mono PL"
-        ./do_generate 04 --powerline --mono Reddit-ExtraBold.ttf  ReaditSansPL-ExtraBold.ttf  "Readit Mono PL"
-        ./do_generate 05 --powerline --mono Reddit-Light.ttf      ReaditSansPL-Light.ttf      "Readit Mono PL"
-        ./do_generate 06 --powerline --mono Reddit-Medium.ttf     ReaditSansPL-Medium.ttf     "Readit Mono PL"
-        mkdir ./readit-mono-powerline
-        find . -type f -name "*.ttf" -exec sed -i "s/Reddit/Readit/g" {} +
-        find . -type f -name "*.ttf" -exec sed -i "s/MonoNerdFontMono/Mono/g" {} +
-        find . -type f -name "*.ttf" -exec mv  -t "./readit-mono-powerline" {} +
-        zip -r readit-mono-powerline.zip ./readit-mono-powerline
-
-    - name: Build Mono (Complete)
+        ./do_generate 01 --powerline --mono Reddit-Regular.ttf    ReaditSansPL.ttf            "ReaditMono"
+        ./do_generate 02 --powerline --mono Reddit-Bold.ttf       ReaditSansPL-Bold.ttf       "ReaditMono"
+        ./do_generate 03 --powerline --mono Reddit-SemiBold.ttf   ReaditSansPL-SemiBold.ttf   "ReaditMono"
+        ./do_generate 04 --powerline --mono Reddit-ExtraBold.ttf  ReaditSansPL-ExtraBold.ttf  "ReaditMono"
+        ./do_generate 05 --powerline --mono Reddit-Light.ttf      ReaditSansPL-Light.ttf      "ReaditMono"
+        ./do_generate 06 --powerline --mono Reddit-Medium.ttf     ReaditSansPL-Medium.ttf     "ReaditMono"
+       
+    - name: Build NF Complete
       run: |
-        ./do_generate 07 --complete --mono  Reddit-Regular.ttf    ReaditSans.ttf              "Readit Mono"
-        ./do_generate 08 --complete --mono  Reddit-Bold.ttf       ReaditSans-Bold.ttf         "Readit Mono"
-        ./do_generate 09 --complete --mono  Reddit-SemiBold.ttf   ReaditSans-SemiBold.ttf     "Readit Mono"
-        ./do_generate 10 --complete --mono  Reddit-ExtraBold.ttf  ReaditSans-ExtraBold.ttf    "Readit Mono"
-        ./do_generate 11 --complete --mono  Reddit-Light.ttf      ReaditSans-Light.ttf        "Readit Mono"
-        ./do_generate 12 --complete --mono  Reddit-Medium.ttf     ReaditSans-Medium.ttf       "Readit Mono"
-        mkdir ./readit-mono
-        find . -type f -name "*.ttf" -exec sed -i "s/Reddit/Readit/g" {} +
-        find . -type f -name "*.ttf" -exec sed -i "s/MonoNerdFontMono/Mono/g" {} +
-        find . -type f -name "*.ttf" -exec mv  -t "./readit-mono" {} +
-        zip -r readit-mono.zip ./readit-mono
+        ./do_generate 07 --complete --no-progressbars Reddit-Regular.ttf    ReaditSans.ttf              "ReaditMono"
+        ./do_generate 08 --complete --no-progressbars Reddit-Bold.ttf       ReaditSans-Bold.ttf         "ReaditMono"
+        ./do_generate 09 --complete --no-progressbars Reddit-SemiBold.ttf   ReaditSans-SemiBold.ttf     "ReaditMono"
+        ./do_generate 10 --complete --no-progressbars Reddit-ExtraBold.ttf  ReaditSans-ExtraBold.ttf    "ReaditMono"
+        ./do_generate 11 --complete --no-progressbars Reddit-Light.ttf      ReaditSans-Light.ttf        "ReaditMono"
+        ./do_generate 12 --complete --no-progressbars Reddit-Medium.ttf     ReaditSans-Medium.ttf       "ReaditMono"
 
+    - name: Build NF Propo Complete
+      run: |
+        ./do_generate 07 --variable-width-glyphs --complete Reddit-Regular.ttf    ReaditSans.ttf              "ReaditMono"
+        ./do_generate 08 --variable-width-glyphs --complete Reddit-Bold.ttf       ReaditSans-Bold.ttf         "ReaditMono"
+        ./do_generate 09 --variable-width-glyphs --complete Reddit-SemiBold.ttf   ReaditSans-SemiBold.ttf     "ReaditMono"
+        ./do_generate 10 --variable-width-glyphs --complete Reddit-ExtraBold.ttf  ReaditSans-ExtraBold.ttf    "ReaditMono"
+        ./do_generate 11 --variable-width-glyphs --complete Reddit-Light.ttf      ReaditSans-Light.ttf        "ReaditMono"
+        ./do_generate 12 --variable-width-glyphs --complete Reddit-Medium.ttf     ReaditSans-Medium.ttf       "ReaditMono"
 
+    - name: Build NF Mono Complete  # 5th flag, output font name, is irrelevant (no longer used in 'rename-font' script)
+      run: |
+        ./do_generate 01 --mono --complete Reddit-Regular.ttf    ReaditSansPL.ttf            "ReaditMono"
+        ./do_generate 02 --mono --complete Reddit-Bold.ttf       ReaditSansPL-Bold.ttf       "ReaditMono"
+        ./do_generate 03 --mono --complete Reddit-SemiBold.ttf   ReaditSansPL-SemiBold.ttf   "ReaditMono"
+        ./do_generate 04 --mono --complete Reddit-ExtraBold.ttf  ReaditSansPL-ExtraBold.ttf  "ReaditMono"
+        ./do_generate 05 --mono --complete Reddit-Light.ttf      ReaditSansPL-Light.ttf      "ReaditMono"
+        ./do_generate 06 --mono --complete Reddit-Medium.ttf     ReaditSansPL-Medium.ttf     "ReaditMono"
     #- name: Check for preexisting glyphs
       #run: |
         #grep 'Skipping...' process*.log | grep  -vE ' Powerline(Extra)?Symbols>'
 
-    - name: Upload Powerline Fonts
+    - name: Upload Powerline Mono Fonts
       uses: actions/upload-artifact@v4
       with:
-        name: Readit Mono Powerline
-        path: "readit-mono-powerline.zip"
+        name: ReaditMono Powerline
+        path: "ReaditMono--powerline.zip"
 
-    - name: Upload Mono (Complete) Fonts
+    - name: Upload NF Complete Fonts
       uses: actions/upload-artifact@v4
       with:
-        name: Readit Mono
-        path: "readit-mono.zip"
+        name: ReaditMono NF Complete
+        path: "ReaditMono--complete.zip"
 
+    - name: Upload NF Propo Fonts
+      uses: actions/upload-artifact@v4
+      with:
+        name: ReaditMono NF Propo Complete
+        path: "ReaditMono--variable-width-glyphs.zip"
+
+    - name: Upload NF Mono Complete Fonts
+      uses: actions/upload-artifact@v4
+      with:
+        name: ReaditMono NF Mono Complete
+        path: "ReaditMono--mono.zip"
     # Release part
     - name: Create tag
       if: ${{ github.event_name != 'pull_request' && !startsWith(github.ref, 'refs/tags/') && needs.check-for-new-reddit-sans.outputs.tag_exists != 'true' }}
@@ -191,7 +208,9 @@ jobs:
       with:
         tag_name: ${{ startsWith(github.ref, 'refs/tags/') && steps.get_tag_name.outputs.version || needs.check-for-new-reddit-sans.outputs.tag_name }}
         files: |
-          readit-mono-powerline.zip
-          readit-mono.zip
+          ReaditMono--powerline.zip
+          ReaditMono--complete.zip
+          ReaditMono--variable-width-glyphs.zip
+          ReaditMono--mono.zip
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
