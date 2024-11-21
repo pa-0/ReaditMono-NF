@@ -10,7 +10,7 @@ sys.path.insert(0, os.path.abspath(os.path.dirname(sys.argv[0])) + '/bin/scripts
 from FontnameParser import FontnameParser
 from TableHEADWriter import TableHEADWriter
 
-# Setup and parse the comand-line arguments
+# Setup and parse the command-line arguments
 parser = ArgumentParser()
 parser.add_argument("--input", help="input file name")
 parser.add_argument("--orig", help="original font filename")
@@ -19,7 +19,7 @@ parser.add_argument("--name", help="preferred family name")
 parser.add_argument("--version", help="text to add to the existing version")
 args = parser.parse_args()
 
-SIL_TABLE = [('cascadia ?(code|mono)( ?pl)?', args.name), ]
+SIL_TABLE = [('readit sans ?(mono)( ?pl)?', args.name), ]
 
 print("\nRenaming process\n    {}\n as {}\n -> {}".format(args.input, args.orig, args.output))
 
@@ -32,29 +32,29 @@ if not n.parse_ok:
     sys.exit("Something with name parsing went wrong")
 
 # Open the file
-delugia=fontforge.open(args.input)
+readit=fontforge.open(args.input)
 
 # Rename the file
-n.rename_font(delugia)
+n.rename_font(readit)
 
 # Other information
-delugia.appendSFNTName("English (US)", "UniqueID", "{};{}".format(args.version, n.psname()))
-delugia.appendSFNTName("English (US)", "Trademark", "")
+readit.appendSFNTName("English (US)", "UniqueID", "{};{}".format(args.version, n.psname()))
+readit.appendSFNTName("English (US)", "Trademark", "")
 
 # Mix our version information in
-delugia.sfntRevision = None # Auto-set (refreshed) by fontforge
-delugia.appendSFNTName("English (US)", "Version", args.version)
-delugia.version = args.version
+readit.sfntRevision = None # Auto-set (refreshed) by fontforge
+readit.appendSFNTName("English (US)", "Version", args.version)
+readit.version = args.version
 
 if n.psname().lower().find("mono"):
     # For MS-Windows console apps
-    panose = list(delugia.os2_panose)
+    panose = list(readit.os2_panose)
     if panose[0] < 3: # https://forum.high-logic.com/postedfiles/Panose.pdf
         panose[3] = 9 # 3 (4th value) = propotion: 9 = monospaced
-        delugia.os2_panose = tuple(panose)
+        readit.os2_panose = tuple(panose)
 
 # Save
-delugia.generate(args.output)
+readit.generate(args.output)
 print("Generated '{}' from {} version {}".format(args.output, n.fullname(), args.version))
 
 # Fix fontforge destroying the font flags
