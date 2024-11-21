@@ -123,9 +123,9 @@ jobs:
         ./do_generate 05 --powerline --mono RedditMono-Light.ttf      ReaditMonoPL-Light.ttf      "Readit Mono PL"
         ./do_generate 06 --powerline --mono RedditMono-Medium.ttf     ReaditMonoPL-Medium.ttf     "Readit Mono PL"
         mkdir readit-mono-powerline
-        for file in "*.tff"; do mv "${file}" "${file/NerdFontMono/}"; done
+        find . -name "*.ttf" -exec sed -i "s/MonoNerdFontMono/Mono/g" {} +
         find . -name "*.ttf" -exec sed -i "s/Reddit/Readit/g" {} +
-        mv Readit*ttf readit-mono-powerline
+        find . -name "Readit*.ttf" -exec mv "./readit-mono-powerline" {} +
         zip readit-mono-powerline.zip readit-mono-powerline/*
 
     - name: Build Mono (Complete)
@@ -137,9 +137,9 @@ jobs:
         ./do_generate 11 --complete --mono  RedditMono-Light.ttf      ReaditMono-Light.ttf        "Readit Mono"
         ./do_generate 12 --complete --mono  RedditMono-Medium.ttf     ReaditMono-Medium.ttf       "Readit Mono"
         mkdir readit-mono
-        for file in "*.tff"; do mv "${file}" "${file/NerdFontMono/}"; done
+        find . -name "*.ttf" -exec sed -i "s/MonoNerdFontMono/Mono/g" {} +
         find . -name "*.ttf" -exec sed -i "s/Reddit/Readit/g" {} +
-        mv "Readit*ttf" readit-mono
+        find . -name "Readit*.ttf" -exec mv "./readit-mono" {} +
         zip readit-mono.zip readit-mono/*
 
 
@@ -150,12 +150,12 @@ jobs:
     - uses: actions/upload-artifact@v4
       with:
         name: Readit Sans Mono Powerline
-        path: "readit-mono-powerline"
+        path: "readit-mono-powerline.zip"
 
     - uses: actions/upload-artifact@v4
       with:
         name: Readit Sans Mono
-        path: "readit-mono"
+        path: "readit-mono.zip"
 
     # Release part
     - name: Create tag
