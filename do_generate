@@ -21,7 +21,7 @@ fi
 
 PWD=$( pwd )
 
-rm -f R*.ttf
+#rm -f R*.ttf   <== Why delete the fonts before running patcher? TODO Figure this out
 fontforge -script "${PWD}/font-patcher" --debug 2 --careful "${3}" --custom SomeExtraSymbols.sfd --no-progressbars "${PWD}/${4}" "${2}" --outputdir "${PWD}" | tee "process${1}.log"
 
 if [ -z "${OURVERSION}" ]; then
