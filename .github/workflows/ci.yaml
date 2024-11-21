@@ -26,6 +26,8 @@ jobs:
       id: get_latest_release
       with:
         route: GET /repos/reddit/redditsans/releases/latest
+        owner: reddit
+        repo: redditsans
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Get the latest Reddit Sans tag
