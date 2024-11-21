@@ -131,7 +131,7 @@ jobs:
         ./do_generate 05 --powerline --mono Readit-Light.ttf      ReaditSansPL-Light.ttf      "Readit Mono PL"
         ./do_generate 06 --powerline --mono Readit-Medium.ttf     ReaditSansPL-Medium.ttf     "Readit Mono PL"
         mkdir ./readit-mono-powerline
-        find . -name "*.ttf" -exec mv "./readit-mono-powerline" {} +
+        find . -type f -name "*.ttf" -exec mv "./readit-mono-powerline" {} +
         zip -r readit-mono-powerline.zip ./readit-mono-powerline
 
     - name: Build Mono (Complete)
@@ -143,7 +143,7 @@ jobs:
         ./do_generate 11 --complete --mono  Readit-Light.ttf      ReaditSans-Light.ttf        "Readit Mono"
         ./do_generate 12 --complete --mono  Readit-Medium.ttf     ReaditSans-Medium.ttf       "Readit Mono"
         mkdir ./readit-mono
-        find . -name "*.ttf" -exec mv "./readit-mono" {} +
+        find . -type f -name "*.ttf" -exec mv "./readit-mono" {} +
         zip -r readit-mono.zip ./readit-mono
 
 
