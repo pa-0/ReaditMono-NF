@@ -122,9 +122,11 @@ jobs:
         ./do_generate 04 --powerline --mono RedditMono-ExtraBold.ttf  ReaditMonoPL-ExtraBold.ttf  "Readit Mono PL"
         ./do_generate 05 --powerline --mono RedditMono-Light.ttf      ReaditMonoPL-Light.ttf      "Readit Mono PL"
         ./do_generate 06 --powerline --mono RedditMono-Medium.ttf     ReaditMonoPL-Medium.ttf     "Readit Mono PL"
-        mkdir readit-sans-mono-powerline
-        mv Readit*ttf readit-sans-mono-powerline
-        zip readit-sans-mono-powerline.zip readit-sans-mono-powerline/*
+        mkdir readit-mono-powerline
+        for file in "*.tff"; do mv "${file}" "${file/NerdFontMono/}"; done
+        find . -name "*.ttf" -exec sed -i "s/Reddit/Readit/g" {} +
+        mv Readit*ttf readit-mono-powerline
+        zip readit-mono-powerline.zip readit-mono-powerline/*
 
     - name: Build Mono (Complete)
       run: |
@@ -134,9 +136,11 @@ jobs:
         ./do_generate 10 --complete --mono  RedditMono-ExtraBold.ttf  ReaditMono-ExtraBold.ttf    "Readit Mono"
         ./do_generate 11 --complete --mono  RedditMono-Light.ttf      ReaditMono-Light.ttf        "Readit Mono"
         ./do_generate 12 --complete --mono  RedditMono-Medium.ttf     ReaditMono-Medium.ttf       "Readit Mono"
-        mkdir readit-sans-mono
-        mv Readit*ttf readit-sans-mono
-        zip readit-sans-mono.zip readit-sans-mono/*
+        mkdir readit-mono
+        for file in "*.tff"; do mv "${file}" "${file/NerdFontMono/}"; done
+        find . -name "*.ttf" -exec sed -i "s/Reddit/Readit/g" {} +
+        mv "Readit*ttf" readit-mono
+        zip readit-mono.zip readit-mono/*
 
 
     - name: Check for preexisting glyphs
@@ -146,12 +150,12 @@ jobs:
     - uses: actions/upload-artifact@v4
       with:
         name: Readit Sans Mono Powerline
-        path: "readit-sans-mono-powerline"
+        path: "readit-mono-powerline"
 
     - uses: actions/upload-artifact@v4
       with:
         name: Readit Sans Mono
-        path: "readit-sans-mono"
+        path: "readit-mono"
 
     # Release part
     - name: Create tag
@@ -172,7 +176,7 @@ jobs:
       with:
         tag_name: ${{ startsWith(github.ref, 'refs/tags/') && steps.get_tag_name.outputs.version || needs.check-for-new-reddit-sans.outputs.tag_name }}
         files: |
-          readit-sans-mono-powerline.zip
-          readit-sans-mono.zip
+          readit-mono-powerline.zip
+          readit-mono.zip
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
