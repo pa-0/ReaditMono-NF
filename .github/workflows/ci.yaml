@@ -122,11 +122,11 @@ jobs:
         ./do_generate 04 --powerline --mono RedditMono-ExtraBold.ttf  ReaditMonoPL-ExtraBold.ttf  "Readit Mono PL"
         ./do_generate 05 --powerline --mono RedditMono-Light.ttf      ReaditMonoPL-Light.ttf      "Readit Mono PL"
         ./do_generate 06 --powerline --mono RedditMono-Medium.ttf     ReaditMonoPL-Medium.ttf     "Readit Mono PL"
-        mkdir readit-mono-powerline
+        mkdir ./readit-mono-powerline
         find . -name "*.ttf" -exec sed -i "s/MonoNerdFontMono/Mono/g" {} +
         find . -name "*.ttf" -exec sed -i "s/Reddit/Readit/g" {} +
         find . -name "Readit*.ttf" -exec mv "./readit-mono-powerline" {} +
-        zip readit-mono-powerline.zip readit-mono-powerline/*
+        zip readit-mono-powerline.zip ./readit-mono-powerline
 
     - name: Build Mono (Complete)
       run: |
@@ -136,11 +136,11 @@ jobs:
         ./do_generate 10 --complete --mono  RedditMono-ExtraBold.ttf  ReaditMono-ExtraBold.ttf    "Readit Mono"
         ./do_generate 11 --complete --mono  RedditMono-Light.ttf      ReaditMono-Light.ttf        "Readit Mono"
         ./do_generate 12 --complete --mono  RedditMono-Medium.ttf     ReaditMono-Medium.ttf       "Readit Mono"
-        mkdir readit-mono
+        mkdir ./readit-mono
         find . -name "*.ttf" -exec sed -i "s/MonoNerdFontMono/Mono/g" {} +
         find . -name "*.ttf" -exec sed -i "s/Reddit/Readit/g" {} +
         find . -name "Readit*.ttf" -exec mv "./readit-mono" {} +
-        zip readit-mono.zip readit-mono/*
+        zip -r readit-mono.zip ./readit-mono
 
 
     - name: Check for preexisting glyphs
