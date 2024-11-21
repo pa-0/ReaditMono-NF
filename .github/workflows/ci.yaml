@@ -1,5 +1,5 @@
 name: Nerd Font Patcher
-
+permissions: write-all
 on:
   workflow_dispatch:
   push:
@@ -16,6 +16,8 @@ on:
 jobs:
   check-for-new-reddit-sans:
     runs-on: ubuntu-22.04
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     outputs:
       tag_name: ${{ env.REDDITSANSTAG }}
       tag_exists: ${{ steps.check_tag.outputs.exists }}
@@ -74,11 +76,17 @@ jobs:
         # tag: ${{ needs.check-for-new-reddit-sans.outputs.tag_name }}
       run: |
         wget https://github.com/reddit/redditsans/raw/refs/heads/main/fonts/mono/ttf/RedditMono-Regular.ttf
+        mv RedditMono-Regular.ttf Readit-Regular.ttf
         wget https://github.com/reddit/redditsans/raw/refs/heads/main/fonts/mono/ttf/RedditMono-Light.ttf
+        mv RedditMono-Light.ttf Readit-Light.ttf
         wget https://github.com/reddit/redditsans/raw/refs/heads/main/fonts/mono/ttf/RedditMono-Medium.ttf
+        mv RedditMono-Medium.ttf Readit-Medium.ttf
         wget https://github.com/reddit/redditsans/raw/refs/heads/main/fonts/mono/ttf/RedditMono-SemiBold.ttf
+        mv RedditMono-SemiBold.ttf Readit-SemiBold.ttf
         wget https://github.com/reddit/redditsans/raw/refs/heads/main/fonts/mono/ttf/RedditMono-Bold.ttf
+        mv RedditMono-Bold.ttf Readit-Bold.ttf
         wget https://github.com/reddit/redditsans/raw/refs/heads/main/fonts/mono/ttf/RedditMono-ExtraBold.ttf
+        mv RedditMono-ExtraBold.ttf Readit-ExtraBold.ttf
 
     # Ubuntu 20.04 has only fontforge release 2020, but there are some vital bugfixes in the 2022 release
     # This can be replaced with the ordinary apt package when Ubuntu updates, probably with 22.10?
@@ -116,30 +124,26 @@ jobs:
 
     - name: Build Mono Powerline
       run: |
-        ./do_generate 01 --powerline --mono RedditMono-Regular.ttf    ReaditMonoPL.ttf            "Readit Mono PL"
-        ./do_generate 02 --powerline --mono RedditMono-Bold.ttf       ReaditMonoPL-Bold.ttf       "Readit Mono PL"
-        ./do_generate 03 --powerline --mono RedditMono-SemiBold.ttf   ReaditMonoPL-SemiBold.ttf   "Readit Mono PL"
-        ./do_generate 04 --powerline --mono RedditMono-ExtraBold.ttf  ReaditMonoPL-ExtraBold.ttf  "Readit Mono PL"
-        ./do_generate 05 --powerline --mono RedditMono-Light.ttf      ReaditMonoPL-Light.ttf      "Readit Mono PL"
-        ./do_generate 06 --powerline --mono RedditMono-Medium.ttf     ReaditMonoPL-Medium.ttf     "Readit Mono PL"
+        ./do_generate 01 --powerline --mono Readit-Regular.ttf    ReaditSansPL.ttf            "Readit Mono PL"
+        ./do_generate 02 --powerline --mono Readit-Bold.ttf       ReaditSansPL-Bold.ttf       "Readit Mono PL"
+        ./do_generate 03 --powerline --mono Readit-SemiBold.ttf   ReaditSansPL-SemiBold.ttf   "Readit Mono PL"
+        ./do_generate 04 --powerline --mono Readit-ExtraBold.ttf  ReaditSansPL-ExtraBold.ttf  "Readit Mono PL"
+        ./do_generate 05 --powerline --mono Readit-Light.ttf      ReaditSansPL-Light.ttf      "Readit Mono PL"
+        ./do_generate 06 --powerline --mono Readit-Medium.ttf     ReaditSansPL-Medium.ttf     "Readit Mono PL"
         mkdir ./readit-mono-powerline
-        find . -name "*.ttf" -exec sed -i "s/MonoNerdFontMono/Mono/g" {} +
-        find . -name "*.ttf" -exec sed -i "s/Reddit/Readit/g" {} +
-        find . -name "Readit*.ttf" -exec mv "./readit-mono-powerline" {} +
-        zip readit-mono-powerline.zip ./readit-mono-powerline
+        find . -name "*.ttf" -exec mv "./readit-mono-powerline" {} +
+        zip -r readit-mono-powerline.zip ./readit-mono-powerline
 
     - name: Build Mono (Complete)
       run: |
-        ./do_generate 07 --complete --mono  RedditMono-Regular.ttf    ReaditMono.ttf              "Readit Mono"
-        ./do_generate 08 --complete --mono  RedditMono-Bold.ttf       ReaditMono-Bold.ttf         "Readit Mono"
-        ./do_generate 09 --complete --mono  RedditMono-SemiBold.ttf   ReaditMono-SemiBold.ttf     "Readit Mono"
-        ./do_generate 10 --complete --mono  RedditMono-ExtraBold.ttf  ReaditMono-ExtraBold.ttf    "Readit Mono"
-        ./do_generate 11 --complete --mono  RedditMono-Light.ttf      ReaditMono-Light.ttf        "Readit Mono"
-        ./do_generate 12 --complete --mono  RedditMono-Medium.ttf     ReaditMono-Medium.ttf       "Readit Mono"
+        ./do_generate 07 --complete --mono  Readit-Regular.ttf    ReaditSans.ttf              "Readit Mono"
+        ./do_generate 08 --complete --mono  Readit-Bold.ttf       ReaditSans-Bold.ttf         "Readit Mono"
+        ./do_generate 09 --complete --mono  Readit-SemiBold.ttf   ReaditSans-SemiBold.ttf     "Readit Mono"
+        ./do_generate 10 --complete --mono  Readit-ExtraBold.ttf  ReaditSans-ExtraBold.ttf    "Readit Mono"
+        ./do_generate 11 --complete --mono  Readit-Light.ttf      ReaditSans-Light.ttf        "Readit Mono"
+        ./do_generate 12 --complete --mono  Readit-Medium.ttf     ReaditSans-Medium.ttf       "Readit Mono"
         mkdir ./readit-mono
-        find . -name "*.ttf" -exec sed -i "s/MonoNerdFontMono/Mono/g" {} +
-        find . -name "*.ttf" -exec sed -i "s/Reddit/Readit/g" {} +
-        find . -name "Readit*.ttf" -exec mv "./readit-mono" {} +
+        find . -name "*.ttf" -exec mv "./readit-mono" {} +
         zip -r readit-mono.zip ./readit-mono
 
 
