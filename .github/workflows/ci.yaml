@@ -156,18 +156,20 @@ jobs:
         zip -r readit-mono.zip ./readit-mono
 
 
-    - name: Check for preexisting glyphs
-      run: |
-        grep 'Skipping...' process*.log | grep  -vE ' Powerline(Extra)?Symbols>'
+    #- name: Check for preexisting glyphs
+      #run: |
+        #grep 'Skipping...' process*.log | grep  -vE ' Powerline(Extra)?Symbols>'
 
-    - uses: actions/upload-artifact@v4
+    - name: Upload Powerline Fonts
+      uses: actions/upload-artifact@v4
       with:
-        name: Readit Sans Mono Powerline
+        name: Readit Mono Powerline
         path: "readit-mono-powerline.zip"
 
-    - uses: actions/upload-artifact@v4
+    - name: Upload Mono (Complete) Fonts
+      uses: actions/upload-artifact@v4
       with:
-        name: Readit Sans Mono
+        name: Readit Mono
         path: "readit-mono.zip"
 
     # Release part
