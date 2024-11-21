@@ -73,6 +73,7 @@ jobs:
       # with:
         # tag: ${{ needs.check-for-new-reddit-sans.outputs.tag_name }}
       run: |
+        sudo apt install --yes --reinstall curl
         cURL -LO https://github.com/reddit/redditsans/raw/refs/heads/main/fonts/mono/ttf/RedditMono-Regular.ttf
         cURL -LO https://github.com/reddit/redditsans/raw/refs/heads/main/fonts/mono/ttf/RedditMono-Light.ttf
         cURL -LO https://github.com/reddit/redditsans/raw/refs/heads/main/fonts/mono/ttf/RedditMono-Medium.ttf
