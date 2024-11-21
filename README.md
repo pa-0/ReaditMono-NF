@@ -1,18 +1,14 @@
 # Readit (Reddit) Mono Nerd Font
 
-![PLACEHOLDER](/REDDITSANSMONO.png)
+![PLACEHOLDER](/RedditMono.png)
 
 Can we add Nerd Fonts to the [Reddit Sans Mono](https://github.com/reddit/redditsans) font family using a GitHub Action?
 
 Inspired by [Scott Hanselman](https://www.hanselman.com/blog/PatchingTheNewCascadiaCodeToIncludePowerlineGlyphsAndOtherNerdFontsForTheWindowsTerminal.aspx) and [Alistair Young](https://github.com/microsoft/cascadia-code/issues/10?WT.mc_id=-blog-scottha#issuecomment-532969414) and, most of all, Adam Cooper, whose effort with the [patched Cascadia family (à la Delugia Code)](https://github.com/adam7/delugia-code "Delugia Code") laid the (automation) groundwork for patching Readit Sans Mono.
 
-The answer, it turns out, is yes.
+Adam wrote a [blog post with more details](https://admcpr.com/automating-the-patching-of-cascadia-code-to-include-nerd-fonts) about how this works.
 
-I wrote a [blog post with more details](https://admcpr.com/automating-the-patching-of-cascadia-code-to-include-nerd-fonts) about how this works.
-
-[![Actions Status](https://github.com/pa-0/RedditSansMono-NerdFont/workflows/Generate%20Fonts/badge.svg)](https://github.com/pa-0/RedditSansMono-NerdFont/actions)
-
-> ⚠ Cascadia is now part of Nerd Fonts' [prepatched font repository](https://github.com/ryanoasis/nerd-fonts#patched-fonts). You can grab it there, and it is almost what you find as Delugia font here. There are some small differences, see below.
+[![Actions Status](https://github.com/pa-0/RedditMono-NerdFont/workflows/Generate%20Fonts/badge.svg)](https://github.com/pa-0/RedditMono-NerdFont/actions)
 
 ## What are Nerd Fonts anyway
 
@@ -58,7 +54,7 @@ Compared with the official nerd-font patched font families:
 
 ## How to use
 
-You can download the patched fonts from the [Releases page](https://github.com/pa-0/RedditSansMono-NerdFont/releases) of this
+You can download the patched fonts from the [Releases page](https://github.com/pa-0/RedditMono-NerdFont/releases) of this
 repo and install them as you would any other font. Once installed the font can be referenced as `Readit Sans Mono *`.
 So if, for example, you want to use it in Windows Terminal you should add the lines
 
