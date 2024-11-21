@@ -3,7 +3,7 @@
 # Create and rename one font style according to the specs
 #
 # Example invocation:
-#   do_generate 01 --powerline --mono CascadiaCodePL-Regular.ttf DelugiaPowerline.ttf Delugia Regular
+#   do_generate 01 --powerline --mono CascadiaCodePL-Regular.ttf DelugiaPowerline.ttf Delugia Regular PL-Mono
 #
 # No parameters are checked, but they are:
 # 1: Number of logfile
@@ -11,7 +11,7 @@
 # 3: Conversion spec #2
 # 4: Input font file name
 # 5: Output font file name
-# 6: Font family name
+# 6: Font family (and base name)
 
 set -e
 
@@ -20,12 +20,13 @@ if [ "$#" -ne 6 ]; then
 fi
 
 PWD=$( pwd )
-
+mkdir "${2}"
 # rm -f C*.ttf
-fontforge -script "${PWD}/font-patcher" --debug 2 --careful "${3}" --custom SomeExtraSymbols.sfd --no-progressbars "${PWD}/${4}" "${2}" --outputdir "${PWD}" | tee "process${1}.log"
-
+fontforge -script "${PWD}/font-patcher" --debug 2 --careful "${3}" --custom SomeExtraSymbols.sfd  "${PWD}/${4}" "${2}" --outputdir "${PWD}/${2}" --makegroups 4 --name "${6}" | tee "process${1}.log"
+zip -r "ReaditMono${2}.zip" "${PWD}/${2}/*"
 if [ -z "${OURVERSION}" ]; then
     # Github CI sets this variable, but this can be useful for manual calls:
     OURVERSION=`git describe --always --tags`
 fi
-fontforge -script "${PWD}/rename-font" --orig "${PWD}/${4}" --input ${PWD}/R*.ttf --output "${PWD}/${5}" --version "${OURVERSION}" --name "${6}"
+# Instead of rename-font script, using parameters to patcher script to control naming scheme ("--makegroups" and "--name")
+# fontforge -script "${PWD}/rename-font" --orig "${PWD}/${4}" --input ${PWD}/R*.ttf --output "${PWD}/${5}" --version "${OURVERSION}" --name "${6}"
