@@ -32,7 +32,8 @@ if not n.parse_ok:
     sys.exit("Something with name parsing went wrong")
 
 # Open the file
-readit=fontforge.open(args.input)
+#readit=fontforge.open(args.input)
+readit=fontforge.open(args.output)
 
 # Rename the file
 n.rename_font(readit)
