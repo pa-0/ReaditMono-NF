@@ -73,14 +73,12 @@ jobs:
       # with:
         # tag: ${{ needs.check-for-new-reddit-sans.outputs.tag_name }}
       run: |
-        apt-get update
-        sudo apt install --yes --reinstall curl --fix-missing
-        cURL -LO https://github.com/reddit/redditsans/raw/refs/heads/main/fonts/mono/ttf/RedditMono-Regular.ttf
-        cURL -LO https://github.com/reddit/redditsans/raw/refs/heads/main/fonts/mono/ttf/RedditMono-Light.ttf
-        cURL -LO https://github.com/reddit/redditsans/raw/refs/heads/main/fonts/mono/ttf/RedditMono-Medium.ttf
-        cURL -LO https://github.com/reddit/redditsans/raw/refs/heads/main/fonts/mono/ttf/RedditMono-SemiBold.ttf
-        cURL -LO https://github.com/reddit/redditsans/raw/refs/heads/main/fonts/mono/ttf/RedditMono-Bold.ttf
-        cURL -LO https://github.com/reddit/redditsans/raw/refs/heads/main/fonts/mono/ttf/RedditMono-ExtraBold.ttf
+        wget https://github.com/reddit/redditsans/raw/refs/heads/main/fonts/mono/ttf/RedditMono-Regular.ttf
+        wget https://github.com/reddit/redditsans/raw/refs/heads/main/fonts/mono/ttf/RedditMono-Light.ttf
+        wget https://github.com/reddit/redditsans/raw/refs/heads/main/fonts/mono/ttf/RedditMono-Medium.ttf
+        wget https://github.com/reddit/redditsans/raw/refs/heads/main/fonts/mono/ttf/RedditMono-SemiBold.ttf
+        wget https://github.com/reddit/redditsans/raw/refs/heads/main/fonts/mono/ttf/RedditMono-Bold.ttf
+        wget https://github.com/reddit/redditsans/raw/refs/heads/main/fonts/mono/ttf/RedditMono-ExtraBold.ttf
 
     # Ubuntu 20.04 has only fontforge release 2020, but there are some vital bugfixes in the 2022 release
     # This can be replaced with the ordinary apt package when Ubuntu updates, probably with 22.10?
