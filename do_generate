@@ -27,7 +27,7 @@ if [ ! -d "$outdir" ]; then
 fi
 
 # rm -f C*.ttf >>> remnant from delugia-font repo
-fontforge -script "${PWD}/font-patcher" --debug 2 --careful "${3}" --custom SomeExtraSymbols.sfd --has-no-italic "${PWD}/${4}" "${2}" --outputdir "${PWD}/$outdir" --makegroups 4 --name "${6}" | tee "process${1}.log"
+fontforge -script "${PWD}/font-patcher" --debug 2 --careful "${3}" --custom SomeExtraSymbols.sfd --has-no-italic "${PWD}/${4}" "${2}" --outputdir "${PWD}/$outdir" --makegroups 4 --name "${5}" | tee "process${1}.log"
 zip -r "$outdir.zip" "${PWD}/$outdir"
 if [ -z "${OURVERSION}" ]; then
     # Github CI sets this variable, but this can be useful for manual calls:
