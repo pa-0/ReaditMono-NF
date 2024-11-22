@@ -129,39 +129,39 @@ jobs:
 
     - name: Build Powerline Mono # 5th flag, output font name, is irrelevant (no longer used in 'rename-font' script)
       run: |
-        ./do_generate 01 --powerline --mono                  Reddit-Regular.ttf    ReaditMono.ttf            "Readit Mono PL"
-        ./do_generate 02 --powerline --mono                  Reddit-Bold.ttf       ReaditMono-Bold.ttf       "Readit Mono PL"
-        ./do_generate 03 --powerline --mono                  Reddit-SemiBold.ttf   ReaditMono-SemiBold.ttf   "Readit Mono PL"
-        ./do_generate 04 --powerline --mono                  Reddit-ExtraBold.ttf  ReaditMono-ExtraBold.ttf  "Readit Mono PL"
-        ./do_generate 05 --powerline --mono                  Reddit-Light.ttf      ReaditMono-Light.ttf      "Readit Mono PL"
-        ./do_generate 06 --powerline --mono                  Reddit-Medium.ttf     ReaditMono-Medium.ttf     "Readit Mono PL"
+        ./do_generate 01 --powerline --mono                  Reddit-Regular.ttf    ReaditMonoPL            "Readit Mono PL"
+        ./do_generate 02 --powerline --mono                  Reddit-Bold.ttf       ReaditMonoPL-Bold       "Readit Mono PL"
+        ./do_generate 03 --powerline --mono                  Reddit-SemiBold.ttf   ReaditMonoPL-SemiBold   "Readit Mono PL"
+        ./do_generate 04 --powerline --mono                  Reddit-ExtraBold.ttf  ReaditMonoPL-ExtraBold  "Readit Mono PL"
+        ./do_generate 05 --powerline --mono                  Reddit-Light.ttf      ReaditMonoPL-Light      "Readit Mono PL"
+        ./do_generate 06 --powerline --mono                  Reddit-Medium.ttf     ReaditMonoPL-Medium     "Readit Mono PL"
        
     - name: Build NF Complete
       run: |
-        ./do_generate 07 --complete --no-progressbars        Reddit-Regular.ttf    ReaditMono.ttf            "Readit NF"
-        ./do_generate 08 --complete --no-progressbars        Reddit-Bold.ttf       ReaditMono-Bold.ttf       "Readit NF"
-        ./do_generate 09 --complete --no-progressbars        Reddit-SemiBold.ttf   ReaditMono-SemiBold.ttf   "Readit NF"
-        ./do_generate 10 --complete --no-progressbars        Reddit-ExtraBold.ttf  ReaditMono-ExtraBold.ttf  "Readit NF"
-        ./do_generate 11 --complete --no-progressbars        Reddit-Light.ttf      ReaditMono-Light.ttf      "Readit NF"
-        ./do_generate 12 --complete --no-progressbars        Reddit-Medium.ttf     ReaditMono-Medium.ttf     "Readit NF"
+        ./do_generate 07 --complete --no-progressbars        Reddit-Regular.ttf    ReaditNF                "Readit NF"
+        ./do_generate 08 --complete --no-progressbars        Reddit-Bold.ttf       ReaditNF-Bold           "Readit NF"
+        ./do_generate 09 --complete --no-progressbars        Reddit-SemiBold.ttf   ReaditNF-SemiBold       "Readit NF"
+        ./do_generate 10 --complete --no-progressbars        Reddit-ExtraBold.ttf  ReaditNF-ExtraBold      "Readit NF"
+        ./do_generate 11 --complete --no-progressbars        Reddit-Light.ttf      ReaditNF-Light          "Readit NF"
+        ./do_generate 12 --complete --no-progressbars        Reddit-Medium.ttf     ReaditNF-Medium         "Readit NF"
 
     - name: Build NF Propo Complete
       run: |
-        ./do_generate 07 --variable-width-glyphs --complete  Reddit-Regular.ttf    ReaditMono.ttf            "Readit Propo NF"
-        ./do_generate 08 --variable-width-glyphs --complete  Reddit-Bold.ttf       ReaditMono-Bold.ttf       "Readit Propo NF"
-        ./do_generate 09 --variable-width-glyphs --complete  Reddit-SemiBold.ttf   ReaditMono-SemiBold.ttf   "Readit Propo NF"
-        ./do_generate 10 --variable-width-glyphs --complete  Reddit-ExtraBold.ttf  ReaditMono-ExtraBold.ttf  "Readit Propo NF"
-        ./do_generate 11 --variable-width-glyphs --complete  Reddit-Light.ttf      ReaditMono-Light.ttf      "Readit Propo NF"
-        ./do_generate 12 --variable-width-glyphs --complete  Reddit-Medium.ttf     ReaditMono-Medium.ttf     "Readit Propo NF"
+        ./do_generate 07 --variable-width-glyphs --complete  Reddit-Regular.ttf    ReaditPropoNF           "Readit Propo NF"
+        ./do_generate 08 --variable-width-glyphs --complete  Reddit-Bold.ttf       ReaditPropoNF-Bold      "Readit Propo NF"
+        ./do_generate 09 --variable-width-glyphs --complete  Reddit-SemiBold.ttf   ReaditPropoNF-SemiBold  "Readit Propo NF"
+        ./do_generate 10 --variable-width-glyphs --complete  Reddit-ExtraBold.ttf  ReaditPropoNF-ExtraBold "Readit Propo NF"
+        ./do_generate 11 --variable-width-glyphs --complete  Reddit-Light.ttf      ReaditPropoNF-Light     "Readit Propo NF"
+        ./do_generate 12 --variable-width-glyphs --complete  Reddit-Medium.ttf     ReaditPropoNF-Medium    "Readit Propo NF"
 
     - name: Build NF Mono Complete  # 5th flag, output font name, is irrelevant (no longer used in 'rename-font' script)
       run: |
-        ./do_generate 01 --mono --complete                   Reddit-Regular.ttf    ReaditMono.ttf            "Readit Mono NF"
-        ./do_generate 02 --mono --complete                   Reddit-Bold.ttf       ReaditMono-Bold.ttf       "Readit Mono NF"
-        ./do_generate 03 --mono --complete                   Reddit-SemiBold.ttf   ReaditMono-SemiBold.ttf   "Readit Mono NF"
-        ./do_generate 04 --mono --complete                   Reddit-ExtraBold.ttf  ReaditMono-ExtraBold.ttf  "Readit Mono NF"
-        ./do_generate 05 --mono --complete                   Reddit-Light.ttf      ReaditMono-Light.ttf      "Readit Mono NF"
-        ./do_generate 06 --mono --complete                   Reddit-Medium.ttf     ReaditMono-Medium.ttf     "Readit Mono NF"
+        ./do_generate 01 --mono --complete                   Reddit-Regular.ttf    ReaditMonoNF            "Readit Mono NF"
+        ./do_generate 02 --mono --complete                   Reddit-Bold.ttf       ReaditMonoNF-Bold       "Readit Mono NF"
+        ./do_generate 03 --mono --complete                   Reddit-SemiBold.ttf   ReaditMonoNF-SemiBold   "Readit Mono NF"
+        ./do_generate 04 --mono --complete                   Reddit-ExtraBold.ttf  ReaditMonoNF-ExtraBold  "Readit Mono NF"
+        ./do_generate 05 --mono --complete                   Reddit-Light.ttf      ReaditMonoNF-Light      "Readit Mono NF"
+        ./do_generate 06 --mono --complete                   Reddit-Medium.ttf     ReaditMonoNF-Medium     "Readit Mono NF"
     #- name: Check for preexisting glyphs
       #run: |
         #grep 'Skipping...' process*.log | grep  -vE ' Powerline(Extra)?Symbols>'
