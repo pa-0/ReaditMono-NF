@@ -20,13 +20,18 @@ if [ "$#" -ne 6 ]; then
 fi
 
 PWD=$( pwd )
-mkdir "${6}${2}"
-# rm -f C*.ttf
-fontforge -script "${PWD}/font-patcher" --debug 2 --careful "${3}" --custom SomeExtraSymbols.sfd --has-no-italic "${PWD}/${4}" "${2}" --outputdir "${PWD}/${6}${2}" --makegroups 4 --name "${6}" | tee "process${1}.log"
-zip -r "${6}${2}.zip" "${PWD}/${6}${2}/"
+outdir="${6}${2}"
+
+if [ ! -d "$outdir" ]; then
+  mkdir "$outdir"
+fi
+
+# rm -f C*.ttf >>> remnant from delugia-font repo
+fontforge -script "${PWD}/font-patcher" --debug 2 --careful "${3}" --custom SomeExtraSymbols.sfd --has-no-italic "${PWD}/${4}" "${2}" --outputdir "${PWD}/$outdir" --makegroups 4 --name "${6}" | tee "process${1}.log"
+zip -r "$outdir.zip" "${PWD}/$outdir"
 if [ -z "${OURVERSION}" ]; then
     # Github CI sets this variable, but this can be useful for manual calls:
     OURVERSION=`git describe --always --tags`
 fi
-# Instead of rename-font script, using parameters to patcher script to control naming scheme ("--makegroups" and "--name")
+# Instead of rename-font script, using parameters to patcher script to control naming scheme ("--makegroups" and "--name") this was also remnant from delugia
 # fontforge -script "${PWD}/rename-font" --orig "${PWD}/${4}" --input ${PWD}/R*.ttf --output "${PWD}/${5}" --version "${OURVERSION}" --name "${6}"
