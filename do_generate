@@ -19,7 +19,7 @@ if [ "$#" -ne 6 ]; then
 fi
 
 PWD=$( pwd )
-outdir="${6}${2}"
+outdir="${6}"
 
 if [ ! -d "$outdir" ]; then
     mkdir "$outdir"
@@ -35,5 +35,3 @@ if [ -z "${OURVERSION}" ]; then
 fi
 
 fontforge -script "${PWD}/rename-font" --orig "${PWD}/${4}" --input "${PWD}/${5}" --output "${PWD}/$outdir/${5}" --version "${OURVERSION}" --name "${6}"
-
-zip -r "$outdir.zip" "${PWD}/$outdir"
