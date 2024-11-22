@@ -34,4 +34,4 @@ if [ -z "${OURVERSION}" ]; then
     OURVERSION=`git describe --always --tags`
 fi
 
-fontforge -script "${PWD}/rename-font" --orig "${PWD}/${4}" --input "${PWD}/${5}" --output "${PWD}/$outdir/${5}" --version "${OURVERSION}" --name "${6}"
+fontforge -script "${PWD}/rename-font" --orig "${PWD}/${4}" --input "${PWD}/${5}.ttf" --output "${PWD}/$outdir/${5}.tff" --version "${OURVERSION}" --name "${6}"
