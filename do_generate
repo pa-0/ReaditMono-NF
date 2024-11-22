@@ -27,11 +27,11 @@ fi
 
 # rm -f C*.ttf >>> remnant from delugia-font repo
 
-fontforge -script "${PWD}/font-patcher" --debug 2 --careful "${3}" --custom SomeExtraSymbols.sfd --has-no-italic "${PWD}/${4}" "${2}" --outputdir "${PWD}" --makegroups 4 --name "${6}" | tee "process${1}.log"
+fontforge -script "${PWD}/font-patcher" --debug 2 --careful "${3}" --custom SomeExtraSymbols.sfd --has-no-italic "${PWD}/${4}" "${2}" --outputdir "${PWD}/$outputdir" --makegroups 4 --name "${6}" | tee "process${1}.log"
 
 if [ -z "${OURVERSION}" ]; then
     # Github CI sets this variable, but this can be useful for manual calls:
     OURVERSION=`git describe --always --tags`
 fi
 
-fontforge -script "${PWD}/rename-font" --orig "${PWD}/${4}" --input "${PWD}/${6}"* --output "${PWD}/$outdir/${5}.ttf" --version "${OURVERSION}" --name "${6}"
+# fontforge -script "${PWD}/rename-font" --orig "${PWD}/${4}" --input "${PWD}/${6}"* --output "${PWD}/$outdir/${5}.ttf" --version "${OURVERSION}" --name "${6}"
