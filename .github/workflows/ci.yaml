@@ -169,25 +169,25 @@ jobs:
     - name: Upload Powerline Mono Fonts
       uses: actions/upload-artifact@v4
       with:
-        name: ReaditMonoPL
+        name: Readit-Mono-PL
         path: "Readit Mono PL"
 
     - name: Upload NF Complete Fonts
       uses: actions/upload-artifact@v4
       with:
-        name: ReaditNerdFont
+        name: Readit-NF
         path: "Readit NF"
 
     - name: Upload NF Propo Fonts
       uses: actions/upload-artifact@v4
       with:
-        name: ReaditPropoNF
+        name: Readit-Propo-NF
         path: "Readit Propo NF"
 
     - name: Upload NF Mono Complete Fonts
       uses: actions/upload-artifact@v4
       with:
-        name: ReaditMonoNF
+        name: Readit-Mono-NF
         path: "Readit Mono NF"
         
     # Release part
@@ -209,9 +209,9 @@ jobs:
       with:
         tag_name: ${{ startsWith(github.ref, 'refs/tags/') && steps.get_tag_name.outputs.version || needs.check-for-new-reddit-sans.outputs.tag_name }}
         files: |
-          ReaditMono--powerline.zip
-          ReaditMono--complete.zip
-          ReaditMono--variable-width-glyphs.zip
-          ReaditMono--mono.zip
+          Readit-Mono-PL.zip
+          Readit-NF.zip
+          Readit-Propo-NF.zip
+          Readit-Mono-NF.zip
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
