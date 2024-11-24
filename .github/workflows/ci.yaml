@@ -100,6 +100,9 @@ jobs:
         mv RedditMono-SemiBold.ttf   Reddit-SemiBold.ttf
         mv RedditMono-Bold.ttf       Reddit-Bold.ttf
         mv RedditMono-ExtraBold.ttf  Reddit-ExtraBold.ttf
+        sudo apt-get install dos2unix
+        dos2unix ./do_generate_ligs
+        sudo chmod a+x ./do_generate_ligs 
         
 
     # Ubuntu 20.04 has only fontforge release 2020, but there are some vital bugfixes in the 2022 release
@@ -176,7 +179,6 @@ jobs:
 
     - name: Build Powerline Mono w/ Ligs # 5th flag, output font name, is irrelevant (no longer used in 'rename-font' script)
       run: |
-        sudo chmod a+x ./do_generate_ligs 
         ./do_generate_ligs 25 --powerline --mono                  Reddit-Regular.ttf    ReaditMonoLPL-Regular    "Readit Mono LPL"
         ./do_generate_ligs 26 --powerline --mono                  Reddit-Bold.ttf       ReaditMonoLPL-Bold       "Readit Mono LPL"
         ./do_generate_ligs 27 --powerline --mono                  Reddit-SemiBold.ttf   ReaditMonoLPL-SemiBold   "Readit Mono LPL"
