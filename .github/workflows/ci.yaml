@@ -14,7 +14,9 @@ on:
   #   - cron: "0 13 * * *"
 
 jobs:
+
   check-for-new-reddit-sans:
+  
     runs-on: ubuntu-22.04
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -23,6 +25,7 @@ jobs:
       tag_exists: ${{ steps.check_tag.outputs.exists }}
 
     steps:
+    
     - uses: oprypin/find-latest-tag@v1
       with:
         repository: reddit/redditsans  # The repository to scan.
@@ -50,9 +53,11 @@ jobs:
         echo "Latest Reddit Sans tag is $REDDITSANSTAG"
 
   build-and-release:
+  
     needs: check-for-new-reddit-sans
     if: ${{ github.event_name != 'schedule' || needs.check-for-new-reddit-sans.outputs.tag_exists != 'true' }}
     runs-on: ubuntu-22.04
+    
     env:
       REDDITSANSTAG: ${{ needs.check-for-new-reddit-sans.outputs.tag_name }}
       REDDITSANSTAG_ISNOTNEW: ${{ needs.check-for-new-reddit-sans.outputs.tag_exists }}
@@ -74,6 +79,10 @@ jobs:
         fi
         echo "OURVERSION=${OURVERSION}" >> $GITHUB_ENV
 
+    - name: Fetch Litagurizer Repository
+      run: |
+        git clone --recurse-submodules -b main -- https://github.com/pa-0/Ligaturizer ./lig
+        
     - name: Download latest version of Reddit Sans Mono
       # with:
         # tag: ${{ needs.check-for-new-reddit-sans.outputs.tag_name }}
@@ -84,12 +93,13 @@ jobs:
         wget https://github.com/reddit/redditsans/raw/refs/heads/main/fonts/mono/ttf/RedditMono-SemiBold.ttf
         wget https://github.com/reddit/redditsans/raw/refs/heads/main/fonts/mono/ttf/RedditMono-Bold.ttf
         wget https://github.com/reddit/redditsans/raw/refs/heads/main/fonts/mono/ttf/RedditMono-ExtraBold.ttf
-        mv RedditMono-Regular.ttf Reddit-Regular.ttf
-        mv RedditMono-Light.ttf Reddit-Light.ttf
-        mv RedditMono-Medium.ttf Reddit-Medium.ttf
-        mv RedditMono-SemiBold.ttf Reddit-SemiBold.ttf
-        mv RedditMono-Bold.ttf Reddit-Bold.ttf
-        mv RedditMono-ExtraBold.ttf Reddit-ExtraBold.ttf
+        mv RedditMono-Regular.ttf    Reddit-Regular.ttf
+        mv RedditMono-Light.ttf      Reddit-Light.ttf
+        mv RedditMono-Medium.ttf     Reddit-Medium.ttf
+        mv RedditMono-SemiBold.ttf   Reddit-SemiBold.ttf
+        mv RedditMono-Bold.ttf       Reddit-Bold.ttf
+        mv RedditMono-ExtraBold.ttf  Reddit-ExtraBold.ttf
+        
 
     # Ubuntu 20.04 has only fontforge release 2020, but there are some vital bugfixes in the 2022 release
     # This can be replaced with the ordinary apt package when Ubuntu updates, probably with 22.10?
@@ -106,7 +116,7 @@ jobs:
         echo "PATH=$PATH" >> $GITHUB_ENV
         echo Try appimage with path
         fontforge --version
-
+    
     - name: Get Font Patcher
       uses: robinraju/release-downloader@v1.10
       with:
@@ -129,7 +139,7 @@ jobs:
 
     - name: Build Powerline Mono # 5th flag, output font name, is irrelevant (no longer used in 'rename-font' script)
       run: |
-        ./do_generate 01 --powerline --mono                  Reddit-Regular.ttf    ReaditMonoPL            "Readit Mono PL"
+        ./do_generate 01 --powerline --mono                  Reddit-Regular.ttf    ReaditMonoPL-Regular    "Readit Mono PL"
         ./do_generate 02 --powerline --mono                  Reddit-Bold.ttf       ReaditMonoPL-Bold       "Readit Mono PL"
         ./do_generate 03 --powerline --mono                  Reddit-SemiBold.ttf   ReaditMonoPL-SemiBold   "Readit Mono PL"
         ./do_generate 04 --powerline --mono                  Reddit-ExtraBold.ttf  ReaditMonoPL-ExtraBold  "Readit Mono PL"
@@ -138,7 +148,7 @@ jobs:
        
     - name: Build NF Complete
       run: |
-        ./do_generate 07 --complete --no-progressbars        Reddit-Regular.ttf    ReaditNF                "Readit NF"
+        ./do_generate 07 --complete --no-progressbars        Reddit-Regular.ttf    ReaditNF-Regular        "Readit NF"
         ./do_generate 08 --complete --no-progressbars        Reddit-Bold.ttf       ReaditNF-Bold           "Readit NF"
         ./do_generate 09 --complete --no-progressbars        Reddit-SemiBold.ttf   ReaditNF-SemiBold       "Readit NF"
         ./do_generate 10 --complete --no-progressbars        Reddit-ExtraBold.ttf  ReaditNF-ExtraBold      "Readit NF"
@@ -147,7 +157,7 @@ jobs:
 
     - name: Build NF Propo Complete
       run: |
-        ./do_generate 07 --variable-width-glyphs --complete  Reddit-Regular.ttf    ReaditPropoNF           "Readit Propo NF"
+        ./do_generate 07 --variable-width-glyphs --complete  Reddit-Regular.ttf    ReaditPropoNF-Regular   "Readit Propo NF"
         ./do_generate 08 --variable-width-glyphs --complete  Reddit-Bold.ttf       ReaditPropoNF-Bold      "Readit Propo NF"
         ./do_generate 09 --variable-width-glyphs --complete  Reddit-SemiBold.ttf   ReaditPropoNF-SemiBold  "Readit Propo NF"
         ./do_generate 10 --variable-width-glyphs --complete  Reddit-ExtraBold.ttf  ReaditPropoNF-ExtraBold "Readit Propo NF"
@@ -156,12 +166,49 @@ jobs:
 
     - name: Build NF Mono Complete  # 5th flag, output font name, is irrelevant (no longer used in 'rename-font' script)
       run: |
-        ./do_generate 01 --mono --complete                   Reddit-Regular.ttf    ReaditMonoNF            "Readit Mono NF"
+        ./do_generate 01 --mono --complete                   Reddit-Regular.ttf    ReaditMonoNF-Regular    "Readit Mono NF"
         ./do_generate 02 --mono --complete                   Reddit-Bold.ttf       ReaditMonoNF-Bold       "Readit Mono NF"
         ./do_generate 03 --mono --complete                   Reddit-SemiBold.ttf   ReaditMonoNF-SemiBold   "Readit Mono NF"
         ./do_generate 04 --mono --complete                   Reddit-ExtraBold.ttf  ReaditMonoNF-ExtraBold  "Readit Mono NF"
         ./do_generate 05 --mono --complete                   Reddit-Light.ttf      ReaditMonoNF-Light      "Readit Mono NF"
         ./do_generate 06 --mono --complete                   Reddit-Medium.ttf     ReaditMonoNF-Medium     "Readit Mono NF"
+
+    - name: Build Powerline Mono w/ Ligs # 5th flag, output font name, is irrelevant (no longer used in 'rename-font' script)
+      run: |
+        ./do_generate 01 --powerline --mono                  Reddit-Regular.ttf    ReaditMonoLPL-Regular    "Readit Mono LPL"
+        ./do_generate 02 --powerline --mono                  Reddit-Bold.ttf       ReaditMonoLPL-Bold       "Readit Mono LPL"
+        ./do_generate 03 --powerline --mono                  Reddit-SemiBold.ttf   ReaditMonoLPL-SemiBold   "Readit Mono LPL"
+        ./do_generate 04 --powerline --mono                  Reddit-ExtraBold.ttf  ReaditMonoLPL-ExtraBold  "Readit Mono LPL"
+        ./do_generate 05 --powerline --mono                  Reddit-Light.ttf      ReaditMonoLPL-Light      "Readit Mono LPL"
+        ./do_generate 06 --powerline --mono                  Reddit-Medium.ttf     ReaditMonoLPL-Medium     "Readit Mono LPL"
+       
+    - name: Build NF Complete w/ Ligs
+      run: |
+        ./do_generate 07 --complete --no-progressbars        Reddit-Regular.ttf    ReaditLNF-Regular        "Readit LNF"
+        ./do_generate 08 --complete --no-progressbars        Reddit-Bold.ttf       ReaditLNF-Bold           "Readit LNF"
+        ./do_generate 09 --complete --no-progressbars        Reddit-SemiBold.ttf   ReaditLNF-SemiBold       "Readit LNF"
+        ./do_generate 10 --complete --no-progressbars        Reddit-ExtraBold.ttf  ReaditLNF-ExtraBold      "Readit LNF"
+        ./do_generate 11 --complete --no-progressbars        Reddit-Light.ttf      ReaditLNF-Light          "Readit LNF"
+        ./do_generate 12 --complete --no-progressbars        Reddit-Medium.ttf     ReaditLNF-Medium         "Readit LNF"
+
+    - name: Build NF Propo Complete w/ Ligs
+      run: |
+        ./do_generate 07 --variable-width-glyphs --complete  Reddit-Regular.ttf    ReaditPropoLNF-Regular   "Readit Propo LNF"
+        ./do_generate 08 --variable-width-glyphs --complete  Reddit-Bold.ttf       ReaditPropoLNF-Bold      "Readit Propo LNF"
+        ./do_generate 09 --variable-width-glyphs --complete  Reddit-SemiBold.ttf   ReaditPropoLNF-SemiBold  "Readit Propo LNF"
+        ./do_generate 10 --variable-width-glyphs --complete  Reddit-ExtraBold.ttf  ReaditPropoLNF-ExtraBold "Readit Propo LNF"
+        ./do_generate 11 --variable-width-glyphs --complete  Reddit-Light.ttf      ReaditPropoLNF-Light     "Readit Propo LNF"
+        ./do_generate 12 --variable-width-glyphs --complete  Reddit-Medium.ttf     ReaditPropoLNF-Medium    "Readit Propo LNF"
+
+    - name: Build NF Mono Complete w/ Ligs # 5th flag, output font name, is irrelevant (no longer used in 'rename-font' script)
+      run: |
+        ./do_generate 01 --mono --complete                   Reddit-Regular.ttf    ReaditMonoLNF-Regular    "Readit Mono LNF"
+        ./do_generate 02 --mono --complete                   Reddit-Bold.ttf       ReaditMonoLNF-Bold       "Readit Mono LNF"
+        ./do_generate 03 --mono --complete                   Reddit-SemiBold.ttf   ReaditMonoLNF-SemiBold   "Readit Mono LNF"
+        ./do_generate 04 --mono --complete                   Reddit-ExtraBold.ttf  ReaditMonoLNF-ExtraBold  "Readit Mono LNF"
+        ./do_generate 05 --mono --complete                   Reddit-Light.ttf      ReaditMonoLNF-Light      "Readit Mono LNF"
+        ./do_generate 06 --mono --complete                   Reddit-Medium.ttf     ReaditMonoLNF-Medium     "Readit Mono LNF"
+
     #- name: Check for preexisting glyphs
       #run: |
         #grep 'Skipping...' process*.log | grep  -vE ' Powerline(Extra)?Symbols>'
@@ -189,7 +236,31 @@ jobs:
       with:
         name: Readit-Mono-NF
         path: "Readit Mono NF"
-        
+
+    - name: Upload Powerline Mono Fonts w/ Ligs
+      uses: actions/upload-artifact@v4
+      with:
+        name: Readit-Mono-LPL
+        path: "lig/Readit Mono LPL"
+
+    - name: Upload NF Complete Fonts w/ Ligs
+      uses: actions/upload-artifact@v4
+      with:
+        name: Readit-LNF
+        path: "lig/Readit LNF"
+
+    - name: Upload NF Propo Fonts w/ Ligs
+      uses: actions/upload-artifact@v4
+      with:
+        name: Readit-Propo-LNF
+        path: "lig/Readit Propo LNF"
+
+    - name: Upload NF Mono Complete Fonts w/ Ligs
+      uses: actions/upload-artifact@v4
+      with:
+        name: Readit-Mono-LNF
+        path: "lig/Readit Mono LNF"
+
     # Release part
     - name: Create tag
       if: ${{ github.event_name != 'pull_request' && !startsWith(github.ref, 'refs/tags/') && needs.check-for-new-reddit-sans.outputs.tag_exists != 'true' }}
@@ -209,6 +280,10 @@ jobs:
         zip Readit-NF.zip "./Readit NF"
         zip Readit-Propo-NF.zip "./Readit Propo NF"
         zip Readit-Mono-NF.zip "./Readit Mono NF"
+        zip Readit-Mono-LPL.zip "./Readit Mono LPL"
+        zip Readit-LNF.zip "./Readit LNF"
+        zip Readit-Propo-LNF.zip "./Readit Propo LNF"
+        zip Readit-Mono-LNF.zip "./Readit Mono LNF"
         
     - name: Release
       uses: softprops/action-gh-release@v2
@@ -221,5 +296,9 @@ jobs:
           Readit-NF.zip
           Readit-Propo-NF.zip
           Readit-Mono-NF.zip
+          Readit-Mono-LPL.zip
+          Readit-LNF.zip
+          Readit-Propo-LNF.zip
+          Readit-Mono-LNF.zip
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
