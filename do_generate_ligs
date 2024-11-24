@@ -29,7 +29,7 @@ fi
 
 PWD=$( pwd )
 ligoutdir="${PWD}/${6}_lig"
-outdir="${PWD}/${6}_ligNF"
+outdir="${PWD}/${6}"
 
 if [ ! -d "$ligoutdir" ]; then
     mkdir "$ligoutdir"
