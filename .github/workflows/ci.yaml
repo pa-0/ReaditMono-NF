@@ -176,6 +176,7 @@ jobs:
 
     - name: Build Powerline Mono w/ Ligs # 5th flag, output font name, is irrelevant (no longer used in 'rename-font' script)
       run: |
+        sudo chmod a+x ./do_generate_ligs 
         ./do_generate_ligs 25 --powerline --mono                  Reddit-Regular.ttf    ReaditMonoLPL-Regular    "Readit Mono LPL"
         ./do_generate_ligs 26 --powerline --mono                  Reddit-Bold.ttf       ReaditMonoLPL-Bold       "Readit Mono LPL"
         ./do_generate_ligs 27 --powerline --mono                  Reddit-SemiBold.ttf   ReaditMonoLPL-SemiBold   "Readit Mono LPL"
