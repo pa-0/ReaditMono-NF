@@ -1,8 +1,21 @@
-# Readit (Reddit) Mono Nerd Font
+# Readit (Reddit) Mono Nerd Font in Several Flavors (!!!!)
+
+Can we add Nerd Fonts to the [Reddit Sans Mono](https://github.com/reddit/redditsans) font family using a GitHub Action?
 
 ![PLACEHOLDER](/RedditMono.png)
 
-Can we add Nerd Fonts to the [Reddit Sans Mono](https://github.com/reddit/redditsans) font family using a GitHub Action?
+## Release Legend
+
+|    Suffix     | Definition                                                                                      |
+|    :----:     | :---                                                                                            |
+|    **NF**     | patched with **N**erd-**F**ont glyphs                                                           |
+|   **LNF**     | patched with **N**erd-**F**ont glyphs and **L**igatures                                         |
+|  **MonoNF**   | **Mono**spaced Font patched with **N**erd-**F**ont glyphs                                       |
+|  **MonoLNF**  | **Mono**spaced Font patched with **N**erd-**F**ont glyphs and **L**igatures                     |
+|  **PropoNF**  | **Propo**rtionate (Variable Width) Font patched with **N**erd-**F**ont glyphs                   |
+|  **PropoLNF** | **Propo**rtionate (Variable Width) Font patched with **L**igatures and **N**erd-**F**ont glyphs |
+|  **MonoPL**   | **Mono**spaced Font patched with **P**ower**L**ine glyphs                                       |
+|  **MonoLPL**  | **Mono**spaced Font patched with **L**igatures and  **P**ower**L**ine glyphs                    |
 
 Inspired by [Scott Hanselman](https://www.hanselman.com/blog/PatchingTheNewCascadiaCodeToIncludePowerlineGlyphsAndOtherNerdFontsForTheWindowsTerminal.aspx) and [Alistair Young](https://github.com/microsoft/cascadia-code/issues/10?WT.mc_id=-blog-scottha#issuecomment-532969414) and, most of all, Adam Cooper, whose effort with the [patched Cascadia family (à la Delugia Code)](https://github.com/adam7/delugia-code "Delugia Code") laid the (automation) groundwork for patching Readit Sans Mono.
 
@@ -58,12 +71,12 @@ You can download the patched fonts from the [Releases page](https://github.com/p
 repo and install them as you would any other font. Once installed the font can be referenced as `Readit Sans Mono *`.
 So if, for example, you want to use it in Windows Terminal you should add the lines
 
-```json
-                "font":
-                {
-                    "face": "Delugia"
-                }
-```
+> ```json
+> "font":
+> {
+>       "face": "ReaditMono"
+> }
+> ```
 
 to the corresponding profiles in your settings.json.
 
@@ -75,5 +88,5 @@ to the corresponding profiles in your settings.json.
 
 I know basically nothing about patching fonts so all contributions are 🦸‍ welcome.
 
->[!Note]
+>[!NOTE]
 > To reduce the font name length the 'Nerd Font' has been dropped out of the (file) names.
