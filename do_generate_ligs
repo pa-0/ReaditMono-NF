@@ -1,0 +1,50 @@
+#!/usr/bin/env sh
+# Nerd-Fonts Patch
+# Create and rename one font style according to the specs
+# Example invocation:
+# do_generate 01 --powerline --mono CascadiaCodePL-Regular.ttf DelugiaPowerline.ttf "Delugia Regular PL-Mono"
+#
+# No parameters are checked, but they are:
+# 1: Number of logfile
+# 2: Conversion spec #1
+# 3: Conversion spec #2
+# 4: Input font file name
+# 5: Output font file name
+# 6: Font family (and base name)
+#
+# Ligaturizer Patch
+# Add Ligatures to script before they are patched with nerd fonts
+#
+# 1: input_font_file
+# 2: output-dir (The actual filename will be automatically generated based on the input font name and--prefix and --output-name flags.)
+# 3: ligature-font-file (File to pull ligs from - script will autoselect best from fonts/fira/distr/otf/ based on the font's weight)
+# 4: prefix (String to prefix the name of the generated font)
+# 5: output-name (Name of the generated font. Completely replaces the original.)
+
+set -e
+
+if [ "$#" -ne 6 ]; then
+    exit 1
+fi
+
+PWD=$( pwd )
+ligoutdir="${PWD}/${6}_lig"
+outdir="${PWD}/${6}_ligNF"
+
+if [ ! -d "$ligoutdir" ]; then
+    mkdir "$ligoutdir"
+fi
+
+if [ ! -d "$outdir" ]; then
+    mkdir "$outdir"
+fi
+
+fontforge -lang py -script "${PWD}/lig/ligaturize.py" "${4}" --output-dir="$ligoutdir"  --output-name="${5}"
+
+if [ -z "${OURVERSION}" ]; then
+    # Github CI sets this variable, but this can be useful for manual calls:
+    OURVERSION=`git describe --always --tags`
+fi
+
+fontforge -script "${PWD}/font-patcher" --debug 2 --careful "${3}" --custom SomeExtraSymbols.sfd --has-no-italic "$ligoutdir/${5}" "${2}" --outputdir "${PWD}/$outdir" --makegroups 4 --name "${5}" | tee "process${1}.log"
+
