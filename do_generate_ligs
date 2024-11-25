@@ -46,5 +46,5 @@ if [ -z "${OURVERSION}" ]; then
     OURVERSION=`git describe --always --tags`
 fi
 
-fontforge -script "${PWD}/font-patcher" --debug 2 --careful "${3}" --custom SomeExtraSymbols.sfd --has-no-italic "$ligoutdir/${5}.ttf" "${2}" --outputdir "${PWD}/$outdir" --makegroups 4 --name "${5}" | tee "process${1}.log"
+fontforge -script "${PWD}/font-patcher" --debug 2 --careful "${3}" --custom SomeExtraSymbols.sfd --has-no-italic "$ligoutdir/${5}.ttf" "${2}" --outputdir "$outdir" --makegroups 4 --name "${5}" | tee "process${1}.log"
 
