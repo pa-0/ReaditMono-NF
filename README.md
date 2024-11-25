@@ -86,7 +86,7 @@ So if, for example, you want to use it in Windows Terminal you should add the li
 
 to the corresponding profiles in your settings.json.
 
-## Example for Delugia on the command line
+## Example for Readit Mono on the command line
 
 ![PLACEHOLDER-Powerline](/placeholder_powerline.png)
 
