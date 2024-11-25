@@ -1,8 +1,11 @@
+<div align=center>
+  
 # Readit (Reddit) Mono Nerd Font in Several Flavors (!!!!)
 
 Can we add Nerd Fonts to the [Reddit Sans Mono](https://github.com/reddit/redditsans) font family using a GitHub Action?
 
 ![image](https://github.com/user-attachments/assets/18fa03c2-adb1-4639-a7d9-96fd9fed236f)
+
 
 
 ## Release Legend
@@ -17,6 +20,8 @@ Can we add Nerd Fonts to the [Reddit Sans Mono](https://github.com/reddit/reddit
 |  **PropoLNF** | **Propo**rtionate (Variable Width) Font patched with **L**igatures and **N**erd-**F**ont glyphs |
 |  **MonoPL**   | **Mono**spaced Font patched with **P**ower**L**ine glyphs                                       |
 |  **MonoLPL**  | **Mono**spaced Font patched with **L**igatures and  **P**ower**L**ine glyphs                    |
+
+</div>
 
 Inspired by [Scott Hanselman](https://www.hanselman.com/blog/PatchingTheNewCascadiaCodeToIncludePowerlineGlyphsAndOtherNerdFontsForTheWindowsTerminal.aspx) and [Alistair Young](https://github.com/microsoft/cascadia-code/issues/10?WT.mc_id=-blog-scottha#issuecomment-532969414) and, most of all, Adam Cooper, whose effort with the [patched Cascadia family (à la Delugia Code)](https://github.com/adam7/delugia-code "Delugia Code") laid the (automation) groundwork for patching Readit Sans Mono.
 
