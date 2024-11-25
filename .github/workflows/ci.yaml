@@ -100,6 +100,15 @@ jobs:
         mv RedditMono-SemiBold.ttf   Reddit-SemiBold.ttf
         mv RedditMono-Bold.ttf       Reddit-Bold.ttf
         mv RedditMono-ExtraBold.ttf  Reddit-ExtraBold.ttf
+        cd ./lig/fonts/
+        mkdir Reddit
+        cd ../../
+        cp Reddit-Regular.ttf        ./lig/fonts/Reddit/
+        cp Reddit-Light.ttf          ./lig/fonts/Reddit/
+        cp Reddit-Medium.ttf         ./lig/fonts/Reddit/
+        cp Reddit-SemiBold.ttf       ./lig/fonts/Reddit/
+        cp Reddit-Bold.ttf           ./lig/fonts/Reddit/
+        cp Reddit-ExtraBold.ttf      ./lig/fonts/Reddit/
         sudo apt-get install dos2unix
         dos2unix ./do_generate_ligs
         sudo chmod a+x ./do_generate_ligs 
