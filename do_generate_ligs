@@ -27,7 +27,7 @@ if [ "$#" -ne 6 ]; then
     exit 1
 fi
 
-PWD=$( pwd )
+PWD=$(pwd)
 ligoutdir="${PWD}/${6}_lig"
 outdir="${PWD}/${6}"
 
@@ -39,7 +39,7 @@ if [ ! -d "$outdir" ]; then
     mkdir "$outdir"
 fi
 
-fontforge -lang py -script "${PWD}/lig/ligaturize.py" "${4}" --output-dir="$ligoutdir"  --output-name="${5}"
+fontforge -lang py -script "${PWD}/lig/ligaturize.py" "${PWD}/lig/fonts/Reddit/${4}" --output-dir="$ligoutdir"  --output-name="${5}"
 
 if [ -z "${OURVERSION}" ]; then
     # Github CI sets this variable, but this can be useful for manual calls:
