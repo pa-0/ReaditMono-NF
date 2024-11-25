@@ -2,7 +2,8 @@
 
 Can we add Nerd Fonts to the [Reddit Sans Mono](https://github.com/reddit/redditsans) font family using a GitHub Action?
 
-![PLACEHOLDER](/RedditMono.png)
+![image](https://github.com/user-attachments/assets/18fa03c2-adb1-4639-a7d9-96fd9fed236f)
+
 
 ## Release Legend
 
