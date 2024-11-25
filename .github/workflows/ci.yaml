@@ -289,14 +289,14 @@ jobs:
 
     - name: Package fonts
       run: |
-        zip Readit-Mono-PL.zip    "./Readit Mono PL"
-        zip Readit-NF.zip         "./Readit NF"
-        zip Readit-Propo-NF.zip   "./Readit Propo NF"
-        zip Readit-Mono-NF.zip    "./Readit Mono NF"
-        zip Readit-Mono-LPL.zip   "./Readit Mono LPL"
-        zip Readit-LNF.zip        "./Readit LNF"
-        zip Readit-Propo-LNF.zip  "./Readit Propo LNF"
-        zip Readit-Mono-LNF.zip   "./Readit Mono LNF"
+        zip -r Readit-Mono-PL.zip    "./Readit Mono PL"
+        zip -r Readit-NF.zip         "./Readit NF"
+        zip -r Readit-Propo-NF.zip   "./Readit Propo NF"
+        zip -r Readit-Mono-NF.zip    "./Readit Mono NF"
+        zip -r Readit-Mono-LPL.zip   "./Readit Mono LPL"
+        zip -r Readit-LNF.zip        "./Readit LNF"
+        zip -r Readit-Propo-LNF.zip  "./Readit Propo LNF"
+        zip -r Readit-Mono-LNF.zip   "./Readit Mono LNF"
         
     - name: Release
       uses: softprops/action-gh-release@v2
