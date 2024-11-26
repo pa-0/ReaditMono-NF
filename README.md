@@ -1,6 +1,6 @@
 <div align=center>
   
-# Readit (Reddit) Mono Nerd Font in Several Flavors (!!!!)
+# Readit (Reddit) Mono Nerd Font with Ligatures (!!!!)
 
 Can we add Nerd Fonts to the [Reddit Sans Mono](https://github.com/reddit/redditsans) font family using a GitHub Action?
 
