@@ -1,4 +1,4 @@
-name: Nerd Font Patcher
+name: Nerd Fonts Patcher + Ligaturizer
 permissions: write-all
 on:
   workflow_dispatch:
