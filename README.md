@@ -2,7 +2,9 @@
   
 # Readit (Reddit) Mono Nerd Font with Ligatures (!!!!)
 
-Can we add Nerd Fonts to the [Reddit Sans Mono](https://github.com/reddit/redditsans) font family using a GitHub Action?
+**Question:** Can we add Nerd Fonts and Ligatures to the [Reddit Sans Mono](https://github.com/reddit/redditsans) font family using a GitHub Action? **Answer:**
+
+[![Nerd Fonts Patcher + Ligaturizer](https://github.com/pa-0/ReaditMono-NF/actions/workflows/ci.yaml/badge.svg)](https://github.com/pa-0/ReaditMono-NF/actions/workflows/ci.yaml)
 
 ![image](https://github.com/user-attachments/assets/18fa03c2-adb1-4639-a7d9-96fd9fed236f)
 
@@ -26,8 +28,6 @@ Can we add Nerd Fonts to the [Reddit Sans Mono](https://github.com/reddit/reddit
 Inspired by [Scott Hanselman](https://www.hanselman.com/blog/PatchingTheNewCascadiaCodeToIncludePowerlineGlyphsAndOtherNerdFontsForTheWindowsTerminal.aspx) and [Alistair Young](https://github.com/microsoft/cascadia-code/issues/10?WT.mc_id=-blog-scottha#issuecomment-532969414) and, most of all, Adam Cooper, whose effort with the [patched Cascadia family (à la Delugia Code)](https://github.com/adam7/delugia-code "Delugia Code") laid the (automation) groundwork for patching Readit Sans Mono.
 
 Adam wrote a [blog post with more details](https://admcpr.com/automating-the-patching-of-cascadia-code-to-include-nerd-fonts) about how this works.
-
-[![Actions Status](https://github.com/pa-0/RedditMono-NerdFont/workflows/Generate%20Fonts/badge.svg)](https://github.com/pa-0/RedditMono-NerdFont/actions)
 
 ## What are Nerd Fonts anyway
 
