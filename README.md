@@ -80,7 +80,8 @@ So if, for example, you want to use it in Windows Terminal you should add the li
 > ```json
 > "font":
 > {
->       "face": "ReaditMono"
+>       "face": "Readit Mono NF"
+>     //"face": "Readit Mono LNF" (if you are using the version with Ligatures)
 > }
 > ```
 
